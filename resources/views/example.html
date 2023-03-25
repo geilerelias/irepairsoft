@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/vuetify@3.1.5/dist/vuetify.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/@mdi/font@7.1.96/css/materialdesignicons.min.css" rel="stylesheet">
+
+</head>
+<body>
+
+
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+
+
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/vuetify@3.1.5/dist/vuetify.min.js"></script>
+
+<div id="app">
+    <v-app>
+        <v-card>
+            {{ message }}
+        </v-card>
+        <v-container>
+            <v-card
+                class="mx-auto"
+                max-width="344"
+                title="User Registration"
+            >
+                <v-container>
+                    <v-text-field
+                        v-model="first"
+                        color="primary"
+                        label="First name"
+                        variant="underlined"
+                    ></v-text-field>
+
+                    <v-text-field
+                        v-model="last"
+                        color="primary"
+                        label="Last name"
+                        variant="outlined"
+                    ></v-text-field>
+
+                    <v-text-field
+                        v-model="email"
+                        color="primary"
+                        label="Email"
+                        variant="outlined"
+                    ></v-text-field>
+
+                    <v-text-field
+                        v-model="password"
+                        color="primary"
+                        label="Password"
+                        placeholder="Enter your password"
+                        variant="outlined"
+                    ></v-text-field>
+
+                    <v-checkbox
+                        v-model="terms"
+                        color="secondary"
+                        label="I agree to site terms and conditions"
+                    ></v-checkbox>
+                </v-container>
+
+                <v-divider></v-divider>
+
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+
+                    <v-btn color="success">
+                        Complete Registration
+
+                        <v-icon icon="mdi-chevron-right" end></v-icon>
+                    </v-btn>
+                </v-card-actions>
+            </v-card>
+        </v-container>
+    </v-app>
+
+</div>
+
+<script>
+    const {createApp} = Vue
+    const {createVuetify} = Vuetify
+
+    const vuetify = createVuetify()
+
+    const app = createApp({
+        data() {
+            return {
+                message: 'Hello Vue!',
+                first: null,
+                last: null,
+                email: null,
+                password: null,
+                terms: false,
+            }
+        }
+    }).use(vuetify).mount('#app')
+</script>
+
+</body>
+</html>
