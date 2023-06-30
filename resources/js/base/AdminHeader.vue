@@ -1,176 +1,121 @@
-<template>
-    <div>
-        <v-app-bar :class="$vuetify.breakpoint.mdAndUp?'px-20':''"
-                   app
-                   clipped-left
-                   color="primary">
-            <v-btn v-if="!route().current('home')" class="mr-1 " fab light text @click="back">
-                <v-icon>mdi-arrow-left</v-icon>
-            </v-btn>
+<script setup>
+import {computed, ref} from "vue";
+import {useDisplay} from 'vuetify';
 
 
-            <logo></logo>
-
-            <v-spacer></v-spacer>
-
-
-            <!-- Settings Dropdown -->
-            <settings-dropdown></settings-dropdown>
-
-
-            <v-app-bar-nav-icon
-                class="hidden-md-and-up white--text"
-                @click="drawer?setDrawer(false):setDrawer(true)"
-            ></v-app-bar-nav-icon>
-        </v-app-bar>
-
-        <v-btn
-            v-show="fab"
-            v-scroll="onScroll"
-            bottom
-            color="primary"
-            dark
-            fab
-            fixed
-            right
-            @click="toTop"
-        >
-            <v-icon>mdi-chevron-up</v-icon>
-        </v-btn>
-    </div>
-</template>
-
-<script>
-
-import {mapMutations, mapState} from "vuex";
-
-import JetApplicationMark from '@/Jetstream/ApplicationMark.vue'
-import JetDropdown from '@/Jetstream/Dropdown.vue'
-import JetDropdownLink from '@/Jetstream/DropdownLink.vue'
-import JetNavLink from '@/Jetstream/NavLink.vue'
-import JetResponsiveNavLink from '@/Jetstream/ResponsiveNavLink.vue'
-
-
-import logo from '@/Components/Logo.vue'
+import {useAdminDrawerStore} from '../../stores/adminDrawer';
+import {useAuthLinksStore} from "../../stores/authLinks";
+import Logo from "@/Components/Logo.vue";
 import SettingsDropdown from "@/Components/SettingsDropdown.vue";
 
-export default {
+const adminDrawerStore = useAdminDrawerStore();
+const authLinksStore = useAuthLinksStore();
 
-    name: "Header",
-    components: {
-        SettingsDropdown,
-        JetApplicationMark,
-        JetDropdown,
-        JetDropdownLink,
-        JetNavLink,
-        JetResponsiveNavLink,
-        logo
-    },
-    props: {
-        seeker: {
-            type: Boolean,
-            default: true
-        },
-        app: {
-            type: Boolean,
-            default: false
-        },
-    },
-    created() {
 
-    },
-    data: () => ({
+const appName = 'iRepairSoft';
+const links = authLinksStore.authLinks
+const toggleDrawer = () => {
+    adminDrawerStore.toggleDrawer();
+};
 
-        fav: true,
-        menu: false,
-        dialog: false,
-        message: false,
-        hints: true,
-        fab: false,
-        logo: logo,
-        department: [],
-        businesses: [],
-        items: [
-            {title: 'Login', icon: 'mdi-account-lock', route: "/login"},
-            {title: 'Sign Up', icon: 'mdi-account-plus', route: "/register"},
-        ],
-        opciones: [
-            {title: "Notificaciones", icon: 'mdi-bell', route: ""},
-            {title: "Seguidos", icon: 'mdi-account-group', route: ""},
-            {title: "Favoritos", icon: 'mdi-heart', route: ""},
-            {title: "Ubicación", icon: 'mdi-map-marker', route: ""},
-            {title: "Ajustes", icon: 'mdi-cog', route: ""},
-        ],
-    }),
-    computed: {
-        ...mapState(["drawer", "search", "page", "color", "flat", "links", "idBusiness"]),
-        localSearch: {
-            get() {
-                return this.search;
-            },
-            set(val) {
-                this.setSearch(val);
-            }
-        },
-    },
-    methods: {
-        ...mapMutations([
-            "setDrawer",
-            "setSearch",
-            "setPage",
-            "setFlat",
-            "setIdBusiness"
-        ]),
-        toTop() {
-            this.$vuetify.goTo(0);
-        }
-        ,
-        onScroll(e) {
-            if (typeof window === "undefined") return;
-            const top = window.pageYOffset || e.target.scrollTop || 0;
-            if (top > 50) {
-                this.fab = true;
-                this.setFlat(false);
-            } else {
-                this.fab = false;
-                this.setFlat(true);
-            }
-        }
-        ,
-        switchToTeam(team) {
-            this.$inertia.put(route('current-team.update'), {
-                'team_id': team.id
-            }, {
-                preserveState: false
-            })
-        },
-        logout() {
-            axios.post(route('logout').url())
-                .then(response => {
-                    window.location = '/';
-                })
-        },
-        back() {
-            window.history.back();
-            //return document.referrer;
-        },
-        searching() {
-            if (!this.route().current('marketplace')) {
-                this.$inertia.get('/marketplace');
-            }
-        }
-    }
+const rail = computed(() => adminDrawerStore.rail)
+
+function changeRail() {
+    adminDrawerStore.changeDrawerRail();
 }
+
+const {mdAndUp} = useDisplay()
+const layoutStyle = computed(() => {
+    console.error('este es un mensaje: ', mdAndUp && rail)
+    if (mdAndUp && rail) {
+        return 'width: 260px !important';
+    } else {
+        return 'width: 0px !important';
+    }
+});
+let loading = ref(false)
+
+
+function getRoute(name) {
+    // this.$inertia.route(this.$route(name)).url()
+    return name;
+}
+
+function onClick() {
+    loading = true
+    alert("llega")
+    setTimeout(() => {
+        loading = false
+        let loaded;
+        loaded = true
+
+    }, 2000)
+
+}
+
+
 </script>
 
-<style>
-.active {
-    border-bottom: solid;
-}
+<template>
+    <v-app-bar class="bg-primary">
+        <template v-slot:prepend>
+            <div :style="layoutStyle" class="d-flex  align-center">
+                <logo size="50"></logo>
+                <p v-if="!rail" class="mr-2 text-h6 font-weight-bold">{{ appName }}</p>
+            </div>
 
-.px-20 {
-    padding-left: 20px !important;
-    padding-right: 20px !important;
-}
-</style>
+        </template>
+
+        <v-app-bar-nav-icon @click="toggleDrawer"></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon @click="changeRail"></v-app-bar-nav-icon>
+        <v-menu :close-on-content-click="false"
+                location="end"
+                offset-y>
+            <template v-slot:activator="{ props }">
+                <v-btn icon="mdi-magnify" v-bind="props"></v-btn>
+            </template>
+
+            <v-sheet class="elevation-10 rounded-md" style="width: 360px;">
+                <div class="d-flex align-center justify-space-between px-5 pt-5">
+                    <v-text-field
+                        :loading="loading"
+                        append-inner-icon="mdi-magnify"
+                        color="primary"
+                        density="compact"
+                        hide-details
+                        label="Search templates"
+                        single-line
+                        variant="outlined"
+                        @click:append-inner="onClick"
+                    ></v-text-field>
+                </div>
+
+                <div class="ps ps--active-y" style="height: 380px;">
+                    <v-list
+                        :lines="false"
+                        density="compact"
+                        lines="two"
+                    >
+                        <v-list-subheader>Enlaces de página rápida</v-list-subheader>
+                        <v-list-item
+                            v-for="(item, i) in links"
+                            :key="i"
+                            :prepend-icon="item.icon"
+                            :subtitle="getRoute(item.route)"
+                            :title="item.title"
+                            :value="item"
+                            color="primary"
+                        >
+                        </v-list-item>
+                    </v-list>
+                </div>
+            </v-sheet>
+        </v-menu>
+        <v-spacer></v-spacer>
+
+        <template v-slot:append>
+            <settings-dropdown></settings-dropdown>
+        </template>
+    </v-app-bar>
+</template>
 

@@ -54,12 +54,12 @@ const reset = () => {
 <template>
     <auth-layout title="Ingresar">
 
-        <AuthenticationCard>
+        <AuthenticationCard  class="pa-2 pa-sm-8">
             <template #logo>
                 <AuthenticationCardLogo/>
-                <h2 class="font-weight-bold mt-4 blue-grey--text text--darken-2">Ingresar</h2>
+                <h2 class="font-weight-bold mt-4 text-blue-grey-darken-2">Ingresar</h2>
                 <h6
-                    class="subtitle-1 mb-2"> ¿No tienes cuenta?
+                    class="text-subtitle-1 mb-2"> ¿No tienes cuenta?
                     <inertia-link href="/register">
                         registrarse
                     </inertia-link>

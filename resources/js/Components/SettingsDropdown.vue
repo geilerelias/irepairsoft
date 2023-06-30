@@ -4,6 +4,7 @@
     <div v-if="$page.props.auth.user!==null" class="text-center hidden-xs-only">
         <v-menu
             :close-on-content-click="false"
+            location="end"
             offset-y
         >
             <template v-slot:activator="{ props }">
@@ -23,31 +24,35 @@
             </template>
 
             <v-card class="pa-5">
-                <v-list>
-                    <v-list-item>
-                        <template v-slot:prepend v-if="$page.props.jetstream.managesProfilePhotos">
-                            <v-avatar color="grey-lighten-1">
-                                <img
-                                    :alt="$page.props.auth.user.name"
-                                    :src="$page.props.auth.user.profile_photo_url"
+                <div class="px-8 pt-6">
+                    <h6 class="text-h6 font-weight-medium">Perfil del usuario</h6>
+                    <div class="d-flex align-center mt-4 pb-6">
+                        <v-avatar color="primary" size="80">
+                            <v-avatar size="76">
+                                <v-img :alt="$page.props.auth.user.name" :src="$page.props.auth.user.profile_photo_url"
+                                       contain
                                 >
+                                </v-img>
                             </v-avatar>
-                        </template>
+                        </v-avatar>
 
-                        <template v-slot:subtitle="{ subtitle }">
-                            <v-list-item-title>{{ $page.props.auth.user.name }}</v-list-item-title>
-                            <v-list-item-subtitle>{{ $page.props.auth.user.email }}</v-list-item-subtitle>
-                        </template>
-                    </v-list-item>
-                </v-list>
+                        <div class="ml-3">
+                            <h6 class="text-h6 mb-n1">{{ $page.props.auth.user.name }}</h6>
+                            <div class="d-flex align-center mt-1">
+                                <v-icon size="18">mdi-email-outline</v-icon>
+                                <span class="text-subtitle-1 font-weight-regular textSecondary ml-2">
+                                       {{ $page.props.auth.user.email }}
+                                    </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                 <v-divider></v-divider>
-
 
                 <!-- Responsive Settings Options -->
                 <v-list v-if="$page.props.auth.user!==null" dense rounded>
                     <v-list-subheader>Administración</v-list-subheader>
-
                     <inertia-link :href="route('dashboard')">
                         <v-list-item
                             :class="route().current('dashboard')?'active primary  white--text':''"
@@ -109,7 +114,7 @@
         </v-menu>
     </div>
 
-<!--Usuario no autenticado-->
+    <!--Usuario no autenticado-->
     <div v-if="$page.props.auth.user==null" class="text-center">
         <v-menu
             :close-on-content-click="false"
@@ -130,7 +135,7 @@
             <v-card>
                 <v-list>
                     <template v-if="$page.props.auth.user==null">
-                        <v-list-subheader>Authentication</v-list-subheader>
+                        <v-list-subheader>Autenticación</v-list-subheader>
                         <v-divider></v-divider>
                         <v-list-item
                             v-for="item in items"

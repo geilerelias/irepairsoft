@@ -31,41 +31,37 @@ const {smAndDown} = useDisplay()
                    md="6"
                    style="background: radial-gradient( #65c020,#7dd439);"
             >
-                <v-container>
-                    <v-row class="sm:justify-center items-center">
-                        <v-col class="d-flex flex-column justify-center align-center items-center" lg="8" md="10"
-                               sm="12">
-                            <!--                                <v-img :src="logoFinal" contain height="50vh"></v-img>-->
-                            <logo :size="200" class="mb-6"></logo>
-                            <v-sheet class="bg-transparent mx-auto w-75"
-                                     flat>
-                                <h1 class="font-weight-bold text-white text-h3 text-lg-h2  text-truncate">
-                                    iRepairSoft
-                                </h1>
-                                <h6
-                                    class="subtitle-1 mt-4 text-white  font-weight-regular text-justify">
-                                    Es el Sistema Web para la Gestión del Servicio de Reparaciones de Dispositivos
-                                    mobiles que surge como una solución de software desarrollado para agilizar
-                                    los procesos inherentes a los establecimientos de reparación.
-                                </h6>
+                <v-container class="d-flex flex-column justify-center align-center">
 
-                                <inertia-link class="text-decoration-none" href="/about-us">
-                                    <v-btn
-                                        class="mt-4 text-capitalize "
-                                        color="white"
-                                        dark
-                                        depressed
-                                        size="x-large"
-                                        variant="outlined"
-                                    >
-                                        Saber más
-                                    </v-btn>
-                                </inertia-link>
+                    <!--                                <v-img :src="logoFinal" contain height="50vh"></v-img>-->
+                    <logo :size="200" class="mb-6"></logo>
+                    <v-sheet class="bg-transparent mx-auto w-75"
+                             flat>
+                        <h1 class="font-weight-bold text-white text-h3 text-lg-h2  text-truncate">
+                            iRepairSoft
+                        </h1>
+                        <h6
+                            class="mt-4 text-white  text-subtitle-1 font-weight-regular text-justify">
+                            Es el Sistema Web para la Gestión del Servicio de Reparaciones de Dispositivos
+                            mobiles que surge como una solución de software desarrollado para agilizar
+                            los procesos inherentes a los establecimientos de reparación.
+                        </h6>
 
-                            </v-sheet>
+                        <inertia-link class="text-decoration-none" href="/about-us">
+                            <v-btn
+                                class="mt-4 text-capitalize "
+                                color="white"
+                                dark
+                                depressed
+                                size="x-large"
+                                variant="outlined"
+                            >
+                                Saber más
+                            </v-btn>
+                        </inertia-link>
 
-                        </v-col>
-                    </v-row>
+                    </v-sheet>
+
                 </v-container>
 
             </v-col>

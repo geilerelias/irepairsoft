@@ -15,19 +15,19 @@ use Inertia\Inertia;
 |
 */
 Route::get('/', function () {
-    return Inertia::render('Views/Home');
+    return Inertia::render('Landing/Home');
 })->name('home');
 
 Route::get('/about-us', function () {
-    return Inertia::render('Views/AboutUs');
+    return Inertia::render('Landing/AboutUs');
 })->name('about-us');
 
 Route::get('/services', function () {
-    return Inertia::render('Views/Services');
+    return Inertia::render('Landing/Services');
 })->name('services');
 
 Route::get('/contact-us', function () {
-    return Inertia::render('Views/ContactUs');
+    return Inertia::render('Landing/ContactUs');
 })->name('contact-us');
 
 Route::get('/example', function () {
@@ -54,3 +54,37 @@ Route::middleware([
 });
 
 
+Route::get('/get/img/{folder?}/{file?}', function ($folder = 'null', $file = null) {
+    $directory = '';
+
+    if ($folder === 'null') {
+        $directory = base_path('resources/images/' . trim($file));
+
+    } else if ($file === null) {
+        $ficheros = scandir(base_path('resources/images/' . trim($folder)));
+        $directory = base_path('resources/images/' . trim($folder) . '/' . $ficheros[2]);
+
+    } else {
+        $directory = base_path('resources/images/' . trim($folder) . '/' . trim($file));
+    }
+
+    try {
+        $fileContent = File::get($directory);
+        $mimeType = File::mimeType($directory);
+
+        return Response::make($fileContent, 200)->header('Content-Type', $mimeType);
+
+    } catch (Exception $e) {
+        return 'Excepción capturada: ' . $e->getMessage() . "\n";
+    }
+});
+
+Route::group([
+    'prefix' => 'admin',
+    'middleware' => ['auth'],
+], function () {
+    Route::resource('user', App\Http\Controllers\Admin\UserController::class);
+    Route::resource('role', App\Http\Controllers\Admin\RoleController::class);
+    Route::resource('permission', App\Http\Controllers\Admin\PermissionController::class);
+    Route::resource('post', App\Http\Controllers\Admin\PostController::class);
+});

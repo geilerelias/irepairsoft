@@ -24,7 +24,7 @@ defineProps({
 <template>
     <div class="text-center align-center justify-center">
         <v-overlay  :model-value="value"
-                    scrim="black"
+                    :scrim="color"
                     class="align-center justify-center bg-black-light" >
             <div class="d-flex justify-center flex-column mb-6 text-center">
                 <div class="spinner mx-auto mb-4">
