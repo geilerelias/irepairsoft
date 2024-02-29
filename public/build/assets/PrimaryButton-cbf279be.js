@@ -1,0 +1,1 @@
+import{p as r,o as n,c as a,w as p,y as s}from"./app-fb34e38a.js";const l={__name:"PrimaryButton",props:{type:{type:String,default:"submit"}},setup(t){return(e,c)=>{const o=r("v-btn");return n(),a(o,{color:"primary",type:t.type},{default:p(()=>[s(e.$slots,"default")]),_:3},8,["type"])}}};export{l as _};

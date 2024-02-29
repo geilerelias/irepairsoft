@@ -1,0 +1,1 @@
+import{z as r}from"./app-fb34e38a.js";const e=r("adminDrawerStore",{state:()=>({adminDrawer:null,rail:null}),actions:{toggleDrawer(){this.adminDrawer=!this.adminDrawer},changeDrawerRail(){this.rail=!this.rail}}});export{e as u};
