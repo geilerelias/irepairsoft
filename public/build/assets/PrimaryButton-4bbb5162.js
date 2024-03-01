@@ -1,0 +1,1 @@
+import{k as r,o as n,c as a,w as s,E as p}from"./app-69bbdf3d.js";const l={__name:"PrimaryButton",props:{type:{type:String,default:"submit"}},setup(t){return(e,c)=>{const o=r("v-btn");return n(),a(o,{color:"primary",type:t.type},{default:s(()=>[p(e.$slots,"default")]),_:3},8,["type"])}}};export{l as _};
