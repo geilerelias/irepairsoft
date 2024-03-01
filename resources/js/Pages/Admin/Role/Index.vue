@@ -2,7 +2,6 @@
 
 import AdminLayout from "../../../Layouts/AdminLayout.vue";
 import BreadCrumbs from "@/Components/BreadCrumbs.vue";
-import {VDataTable} from 'vuetify/labs/VDataTable'
 import {computed, onMounted, ref} from 'vue';
 import {useForm} from '@inertiajs/vue3'
 

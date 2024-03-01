@@ -19,8 +19,10 @@ import PageDrawer from "../Base/PageDrawer.vue";
 import PageHeader from "../Base/PageHeader.vue";
 import PageFooter from "../Base/PageFooter.vue";
 import {Head} from "@inertiajs/vue3";
+
 //aos
-import AOS from "aos";
+import AOS from 'aos';
+import 'aos/dist/aos.css'; // You can also use <link> for styles
 
 onMounted(() => {
     AOS.init();

@@ -2,7 +2,7 @@
 
 import AdminLayout from "@/Layouts/AdminLayout.vue";
 import BreadCrumbs from "@/Components/BreadCrumbs.vue";
-import logoImageBackground from '../../../../images/reparacion-de-movil.jpeg'
+import logoImageBackground from '../../../../images/bg/reparacion-de-movil.jpeg'
 import {useDisplay} from "vuetify";
 
 const props = defineProps({
@@ -38,7 +38,8 @@ const {lgAndUp} = useDisplay()
         <v-container>
             <v-card class="elevation-10 rounded-md overflow-hidden">
 
-                <v-img gradient="to top right, rgba(19,84,122,.8), rgba(128,208,199,.8)" :cover="true" :src="logoImageBackground" alt="profile" class="w-100" max-height="300"></v-img>
+                <v-img :cover="true" :src="logoImageBackground"
+                       alt="profile" class="w-100" gradient="to top right, rgba(19,84,122,.8), rgba(128,208,199,.8)" max-height="300"></v-img>
                 <div class="pb-8">
                     <v-row class="mt-1">
                         <v-col class=" order-sm-second" cols="12" lg="4" sm="12">
