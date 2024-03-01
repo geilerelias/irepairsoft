@@ -15,7 +15,7 @@ const theme = useTheme()
 const drawerStore = useDrawerStore();
 const linksStore = useLinksStore();
 
-const {xsOnly, xs, mdAndDown, mdAndUp, lgAndUp, smAndUp, smAndDown} = useDisplay()
+const {xsOnly, mobile, xs, mdAndDown, mdAndUp, lgAndUp, smAndUp, smAndDown} = useDisplay()
 
 const changeDrawer = (value) => {
     drawerStore.change(!value)
@@ -60,8 +60,7 @@ const back = () => {
                         </v-container>
                     </div>
 
-
-                    <v-spacer v-if="xsOnly"></v-spacer>
+                    <v-spacer v-if="mobile"></v-spacer>
 
                     <v-btn
                         v-if="xs"

@@ -122,7 +122,9 @@ const pilaresCorporativos = [
         <section>
             <v-container>
                 <v-responsive>
-                    <v-carousel aspect-ratio="4/3" class="rounded-lg" cycle height="70vh" hide-delimiter-background
+                    <v-carousel :data-aos="mobile?'fade-up':'fade-up'" aspect-ratio="4/3"
+                                class="rounded-lg" cycle data-aos-delay="200" data-aos-duration="1000"
+                                data-aos-mirror="true" height="70vh" hide-delimiter-background
                                 hide-delimiters
                                 rounded
                                 width="60vh">
@@ -163,23 +165,35 @@ const pilaresCorporativos = [
 
         <v-container class="py-6 py-lg-12 text-center">
             <h1 class="text-body-1 text-sm-h6 text-md-h6 text-lg-h6 text-primary ">
-                Soporte Técnico Apple
+                <span :data-aos="mobile?'fade-up':'fade-left'" data-aos-delay="200"
+                      data-aos-duration="1000" data-aos-mirror="true">
+                    Soporte Técnico Apple
+                </span>
                 <br>
-                <span class="text-secondary text-body-1 text-sm-h6 text-md-h5 text-lg-h3 font-weight-bold">
+                <span :data-aos="mobile?'fade-up':'fade-left'"
+                      class="text-secondary text-body-1 text-sm-h6 text-md-h5 text-lg-h3 font-weight-bold"
+                      data-aos-delay="200"
+                      data-aos-duration="1000"
+                      data-aos-mirror="true">
                      Especialista en iPhone
                 </span>
             </h1>
-            <h2 class="text-body-1 text-sm-h6 secondary--text mt-4 w-full w-md-8-12 w-xl-half mx-auto">
+            <h2 :data-aos="mobile?'fade-up':'fade-left'"
+                class="text-body-1 text-sm-h6 text-secondary mt-4 w-full w-md-8-12 w-xl-half mx-auto"
+                data-aos-delay="200"
+                data-aos-duration="1000">
                 Nuestro servicio posee los más altos estándares en tecnología y diagnóstico.
                 No dejes tu equipo en manos inexpertas, visita profesionales y vive la experiencia iRepair 💻📱⌚️
             </h2>
             <div class="mt-4">
-                <InertiaLink href="contact-us">
+                <InertiaLink :data-aos="mobile?'fade-up':'fade-left'" data-aos-delay="200"
+                             data-aos-duration="1000" href="contact-us">
                     <v-btn class="my-1 mx-sm-1 w-full w-sm-auto" color="primary" x-large>
                         Empezar
                     </v-btn>
                 </InertiaLink>
-                <InertiaLink href="about-us">
+                <InertiaLink :data-aos="mobile?'fade-up':'fade-right'" data-aos-delay="200"
+                             data-aos-duration="1000" href="about-us">
                     <v-btn class="my-1 mx-sm-1 w-full w-sm-auto" x-large>
                         Saber más
                     </v-btn>
@@ -193,16 +207,21 @@ const pilaresCorporativos = [
                     <v-col :data-aos="mobile?'fade-up':'fade-right'"
                            class="v-col-md-5 v-col-12" data-aos-delay="200"
                            data-aos-duration="1000">
-                        <div class="d-flex align-center mb-6">
+                        <div :data-aos="mobile?'fade-up':'zoom-out-up'" class="d-flex align-center mb-6"
+                             data-aos-delay="200"
+                             data-aos-duration="1000">
                             <span class="bg-success pa-2 rounded-circle mr-2"></span>
                             <h6 class="text-subtitle-1 text-dark font-weight-bold">Rapido confiable y seguro
                             </h6>
                         </div>
-                        <h1 class="text-h5 text-lg-h4 font-weight-bold text-dark mb-6">
+                        <h1 :data-aos="mobile?'fade-up':'fade-left'"
+                            class="text-h5 text-lg-h4 font-weight-bold text-dark mb-6"
+                            data-aos-delay="200" data-aos-duration="1000">
                             Reparación en tiempo record
 
                         </h1>
-                        <p class="text-body-1 text-muted mb-8">
+                        <p :data-aos="mobile?'fade-up':'fade-up'" class="text-body-1 text-muted mb-8"
+                           data-aos-delay="200" data-aos-duration="1000">
                             Nuestra mayor satisfacción es darle soluciones a nuestros clientes. Darles la experiencia de
                             un servicio
                             superior con los más altos estándares, tanto tecnológicos como en diagnóstico.
@@ -336,11 +355,12 @@ const pilaresCorporativos = [
                     <v-row class="justify-center">
                         <v-col class="v-col-md-8 v-col-12">
                             <div class="text-center">
-                                <div :data-aos="mobile?'fade-up':'zoom-out-up'" class="rounded-lg d-flex justify-center"
+                                <div :data-aos="mobile?'fade-up':'zoom-out-up'"
+                                     class="rounded-lg mb-md-15 d-flex justify-center"
                                      data-aos-delay="200"
                                      data-aos-duration="1000">
-                                    <img :src="bg2" alt=""
-                                         class="mb-md-15 img-fluid rounded-xl" style="max-height: 300px">
+                                    <v-img :src="bg2" alt="" class=" img-fluid rounded-xl"
+                                           rounded style="max-height: 300px"/>
 
 
                                 </div>
@@ -390,14 +410,14 @@ const pilaresCorporativos = [
                                     <v-col class="v-col-12"><h6
                                         class="text-body-1 text-muted font-weight-regular">Teléfono</h6>
                                         <div class="d-flex align-center">
-                                            <a class="text-decoration-none" href="tel:+573003551477" target="_blank">
+                                            <a class="text-decoration-none" href="tel:+573116500061" target="_blank">
                                                 <v-icon color="white">mdi-phone</v-icon>
                                             </a> &nbsp;
-                                            <a href='https://wa.me/573003551477' target="_blank">
+                                            <a href='https://wa.me/573116500061' target="_blank">
                                                 <v-icon color="white">mdi-whatsapp</v-icon>
                                             </a> &nbsp;
-                                            <a class="font-weight-medium text-h5 text-white" href="tel:+573003551477">
-                                                +57 300 355 1477
+                                            <a class="font-weight-medium text-h5 text-white" href="tel:+573116500061">
+                                                +57 311 650 0061
                                             </a>
                                         </div>
                                     </v-col>
@@ -405,14 +425,14 @@ const pilaresCorporativos = [
 
                                         <h6 class="text-body-1 text-muted font-weight-regular">Email</h6>
                                         <div class="d-flex align-center">
-                                            <a class="text-decoration-none" href="mailto:contacto@wirelesslink.com.co"
+                                            <a class="text-decoration-none" href="mailto:contacto@irepairsoft.com"
                                                target="_blank">
                                                 <v-icon color="white">mdi-email</v-icon>
                                             </a>
 
                                             <a class="font-weight-medium text-h5 text-white ml-2"
-                                               href="mailto:contacto@wirelesslink.com.co">
-                                                contacto@wirelesslink.com.co
+                                               href="mailto:contacto@irepairsoft.com">
+                                                contacto@irepairsoft.com
                                             </a>
                                         </div>
                                     </v-col>

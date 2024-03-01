@@ -163,9 +163,9 @@ const valores = [
                 </v-col>
                 <v-col class="v-col-md-6 v-col-12">
                     <div class="pl-sm-6">
-                        <v-card class=" elevation-10"
+                        <v-card class="hover-card elevation-10"
                                 variant="elevated">
-                            <v-img :src="bgLogo"></v-img>
+                            <v-img :src="bgLogo" class="zoom-in"></v-img>
                         </v-card>
                     </div>
                 </v-col>
@@ -173,19 +173,19 @@ const valores = [
             <div class="py-sm-16 py-6">
                 <v-row>
                     <v-col>
-                        <div class="hover-card overflow-hidden rounded-md h-100">
+                        <div class="hover-card">
                             <v-img :src="about1"
                                    alt="about1" class="zoom-in w-100 h-100" rounded="lg"/>
                         </div>
                     </v-col>
                     <v-col>
-                        <div class="hover-card overflow-hidden rounded-md h-100">
+                        <div class="hover-card">
                             <v-img :src="about2"
                                    alt="about2" class="zoom-in w-100 h-100" rounded="lg"/>
                         </div>
                     </v-col>
                     <v-col>
-                        <div class="hover-card overflow-hidden rounded-md h-100">
+                        <div class="hover-card ">
                             <v-img :src="about3"
                                    alt="about2" class="zoom-in w-100 h-100" rounded="lg"/>
                         </div>
@@ -199,7 +199,8 @@ const valores = [
             <div class="py-md-10 py-sm-5">
                 <v-container class="">
                     <v-row class=" justify-space-between">
-                        <div class="v-col-md-4 v-col-12">
+                        <v-col :data-aos="mobile?'fade-up':'fade-up'"
+                               class="v-col-md-4 v-col-12" data-aos-delay="200" data-aos-duration="1000">
                             <h2 class="text-h4 text-dark font-weight-bold pr-sm-10">
                                 Misión y visión empresarial
                             </h2>
@@ -207,7 +208,7 @@ const valores = [
                                 iRepair Laboratorio es líder en reparación de telefonía celular en Valledupar y sus
                                 alrededores, destacándose por su calidad y enfoque en el crecimiento tecnológico.
                             </p>
-                        </div>
+                        </v-col>
                         <v-col class="v-col-md-7 v-col-12">
                             <v-row class="d-flex flex-column flex-sm-row justify-content-around justify-center">
                                 <v-col class="col-12 col-sm-12 col-md-6 col-lg-5 ">
@@ -376,20 +377,21 @@ const valores = [
                                     </p>
                                 </v-col>
                                 <v-col class="v-col-md-6 v-col-12">
-                                    <div
-                                        class="d-sm-flex d-flex flex-column flex-sm-row  text-center justify-md-end justify-center">
-                                        <v-img
-                                            :src="bg18"
-                                            alt="contact"
-                                            class="mr-2 mb-sm-0 mb-2"
-                                            containt
-                                            height="300" rounded="xl"/>
-                                        <v-img
-                                            :src="bg25"
-                                            alt="professional"
-                                            containt
-                                            height="300" rounded="xl"/>
-                                    </div>
+
+                                    <v-row>
+                                        <v-col>
+                                            <div class="hover-card">
+                                                <v-img :src="bg18"
+                                                       alt="about1" class="zoom-in w-100 h-100" rounded="lg"/>
+                                            </div>
+                                        </v-col>
+                                        <v-col>
+                                            <div class="hover-card">
+                                                <v-img :src="bg25"
+                                                       alt="about2" class="zoom-in w-100 h-100" rounded="lg"/>
+                                            </div>
+                                        </v-col>
+                                    </v-row>
                                 </v-col>
                             </v-row>
 

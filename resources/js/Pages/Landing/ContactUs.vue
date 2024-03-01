@@ -5,11 +5,10 @@ import {useDisplay} from 'vuetify'
 import PageLayout from "@/Layouts/PageLayout.vue";
 import SpinnerComponent from "@/Components/SpinnerComponent.vue";
 import bg from '../../../images/bg/Contact-us.jpg';
+import bgContact from '../../../images/img-horario.jpg';
 
 import {useVuelidate} from '@vuelidate/core'
 import {email, required} from '@vuelidate/validators'
-import TextInput from "../../Components/TextInput.vue";
-import AreaInput from "../../Components/AreaInput.vue";
 
 const initialState = {
     name: '',
@@ -129,24 +128,30 @@ const enviar = (mail) => {
             </v-row>
         </section>
 
-        <v-sheet class="rounded-0" light style="padding: 56px 0px;">
+        <v-sheet class="py-md-15 py-8" light style="padding: 56px 0px;">
             <v-container class="container">
+
+                <div
+                    class="text-h4 font-weight-bold text-dark text-primary"
+                    data-aos="fade-up"
+                    data-aos-delay="200" data-aos-duration="1000">
+                                            <span class="  font-weight-light">
+                                                MANTENTE EN
+                                            </span>
+                    <br>
+                    <span class="ml-16  text-secondary font-weight-bold font-weight-black">
+                                                CONTACTO CON NOSOTROS
+                                            </span>
+                </div>
+                <v-responsive class=" rounded-lg bg-primary mr-auto mb-6"
+                              style="max-width: 100px;">
+                    <v-divider class="pb-1 rounded-lg" light/>
+                </v-responsive>
+
                 <v-row class="justify-space-between">
                     <v-col cols="12" md="5">
                         <div>
-                            <v-container class="container pa-0" pace="6">
-                                <v-row class="no-gutters justify-start">
-                                    <v-col>
-                                        <h3 class="text-uppercase text-h6 font-weight-bold mb-1 text-left">MANTENTE EN
-                                            CONTACTO CON NOSOTROS
-                                        </h3>
 
-                                        <v-responsive class=" rounded-lg bg-primary mr-auto mb-6" style="max-width: 100px;">
-                                            <v-divider class="pb-1 rounded-lg" light/>
-                                        </v-responsive>
-                                    </v-col>
-                                </v-row>
-                            </v-container>
                             <div>
                                 <div class="pt-2 mb-0 d-flex">
                                     <div class="d-inline-flex mb-3 align-self-start">
@@ -175,13 +180,11 @@ const enviar = (mail) => {
 
                                     <div class="d-flex flex-column justify-center align-center">
                                         <div class="d-inline ml-3">
-                                            <h4 class="text-left text-h6  mb-1 secondary--text">Llámanos</h4>
-                                            <a class="base-body text-body-1 mx-auto grey--text text--darken-1 text-left mb-0"
-                                               href="tel:000000000">+57 000000000</a>
-                                            <span
-                                                class="base-body text-body-1 mx-auto grey--text text--darken-1 px-2">-</span>
-                                            <a class="base-body text-body-1 mx-auto grey--text text--darken-1 text-left mb-0"
-                                               href="tel:0000000000">+57 0000000000</a>
+                                            <h4 class="text-left text-h6  mb-1 text-secondary">Llámanos</h4>
+                                            <a class="text-decoration-none " href="tel:+57 012 3456789">
+                                                +57 311 650 0061
+                                            </a>
+
                                         </div>
                                     </div>
                                 </div>
@@ -194,9 +197,11 @@ const enviar = (mail) => {
                                     </div>
                                     <div class="d-flex flex-column justify-center  align-center">
                                         <div class="d-inline ml-3">
-                                            <h4 class="text-left text-h6  mb-1 secondary--text">Escríbenos</h4>
-                                            <a class="text-body-1 grey--text text--darken-1 mb-0"
-                                               href="mailto:contacto@irepairsoft.xyz">contacto@irepairsoft.xyz</a>
+                                            <h4 class="text-left text-h6  mb-1 text-secondary">Escríbenos</h4>
+                                            <a class="text-decoration-none"
+                                               href="mailto:contacto@irepairsoft.com">
+                                                contacto@irepairsoft.com
+                                            </a>
                                         </div>
                                     </div>
                                 </div>
@@ -217,70 +222,147 @@ const enviar = (mail) => {
                         </v-card>
                     </v-col>
 
-                    <v-col class="d-flex justify-center">
-                        <div>
-                            <v-container class="container pa-0" space="4">
-                                <v-row class=" justify-start" no-gutters>
-                                    <v-col>
-                                        <h3 class="text-uppercase text-h6 font-weight-bold mb-1 text-left">
-                                            ENVÍENOS SU MENSAJE
-                                        </h3>
-                                        <v-responsive class="base-divider bg-primary mr-auto mb-6"
-                                                      style="max-width: 28px;">
 
-                                            <v-divider/>
-
-                                        </v-responsive>
-                                    </v-col>
-                                </v-row>
-                            </v-container>
-                            <v-form
-                                ref="form"
-                                :lazy-validation="false"
-                                class="pa-5"
-                                @submit.prevent="enviar(mail)"
-                            >
-                                <v-card :min-width="smAndUp?500:300" outlined>
-                                    <v-card-text>
-                                        <v-row>
-                                            <v-col>
-                                                <TextInput v-model="mail.name"
-                                                           dense
-                                                           label="Nombre"
-                                                />
-                                            </v-col>
-                                            <v-col>
-                                                <TextInput v-model="mail.email"
-                                                           dense
-                                                           label="Email"
-                                                />
-                                            </v-col>
-                                        </v-row>
-                                        <TextInput v-model="mail.subject"
-                                                   dense label="Asunto"
-                                        />
-
-                                        <AreaInput v-model="mail.content"
-                                                   dense
-                                                   label="Descripción del mensaje"
-                                        />
-                                        <div class="d-flex justify-center">
-                                            <v-btn class="font-weight-bold " color="secondary" dark
-                                                   @click="enviar(mail)">
-                                                Enviar mensaje
-                                            </v-btn>
-                                        </div>
-                                    </v-card-text>
-                                </v-card>
-                            </v-form>
-                        </div>
-                    </v-col>
                 </v-row>
             </v-container>
         </v-sheet>
+        <section class="py-md-15 py-8">
+            <v-container>
 
+                <v-row class="d-flex justify-center">
+                    <v-col md="4">
+                        <v-card class="hover-card" data-aos="flip-up"
+                                data-aos-delay="200"
+                                data-aos-duration="1000">
+                            <a class="text-decoration-none" href="#">
+                                <v-img :src="bgContact"
+                                       alt="about2" class="zoom-in w-100 h-100" rounded="lg"/>
+                            </a>
+                        </v-card>
+                    </v-col>
+                    <v-col>
+                        <div class="d-flex justify-center align-center  flex-column">
+                            <div>
+                                <h3 class="text-h6 font-weight-bold mb-1 text-left">
+                                    ENVÍENOS SU MENSAJE
+                                </h3>
+
+                                <v-responsive class="base-divider bg-primary pb-1 border-2 mx-auto  mb-6"
+                                              style="max-width: 28px;">
+                                </v-responsive>
+                            </div>
+                        </div>
+                        <v-form
+                            ref="form"
+                            :lazy-validation="false"
+                            class="pa-5"
+                            @submit.prevent="enviar(mail)"
+                        >
+                            <v-card :min-width="smAndUp?500:300" outlined>
+                                <v-card-text>
+                                    <v-row>
+                                        <v-col>
+                                            <v-text-field v-model="mail.name"
+                                                          label="Nombre"
+                                            />
+                                        </v-col>
+                                        <v-col>
+                                            <v-text-field v-model="mail.email"
+                                                          label="Email"
+                                            />
+                                        </v-col>
+                                    </v-row>
+                                    <v-text-field v-model="mail.subject"
+                                                  label="Asunto"
+                                    />
+
+                                    <v-textarea v-model="mail.content"
+                                                dense
+                                                label="Descripción del mensaje"
+                                    />
+                                    <div class="d-flex justify-center">
+                                        <v-btn class="font-weight-bold " color="secondary" dark size="x-large"
+                                               @click="enviar(mail)">
+                                            Enviar mensaje
+                                        </v-btn>
+                                    </div>
+                                </v-card-text>
+                            </v-card>
+                        </v-form>
+                    </v-col>
+                </v-row>
+
+            </v-container>
+        </section>
         <spinner-component :opacity="0.9" :value="overlay" color="primary"></spinner-component>
 
+        <div class="bg-secondary py-md-15 py-sm-8 py-8">
+            <div class="py-md-9 py-2">
+                <v-container>
+                    <v-row class="justify-space-between">
+                        <v-col class="v-col-md-3 v-col-12 pb-sm-4 pb-1">
+                            <div class="pt-2 mb-0 d-flex align-center">
+                                <div class="d-inline-flex mb-3 align-self-start">
+                                    <v-avatar class="secondary lighten-2" color="primary" size="72">
+                                        <v-icon color="white " size="36">mdi-map-marker</v-icon>
+                                    </v-avatar>
+                                </div>
+                                <div class="d-flex justify-center align-center">
+                                    <div class="d-inline ml-3">
+                                        <h4 class="text-left text-h6  mb-1 secondary--text">Visítanos</h4>
+                                        <h5 class="font-weight-medium text-body-1 text-white ml-2">
+                                            local 6 esquina, Cl. 16b #11-123.
+                                            <br>Valledupar, Cesar </h5>
+                                    </div>
+                                </div>
+                            </div>
+                        </v-col>
+                        <v-col class="v-col-md-3 v-col-12 pb-sm-4 pb-1">
+                            <div class="pt-2 mb-0 d-flex align-center">
+                                <div class="base-avatar d-inline-flex mb-3 align-self-start">
+                                    <v-avatar class="grey lighten-2" color="primary" size="72">
+                                        <v-icon color="white " size="36">mdi-phone</v-icon>
+                                    </v-avatar>
+                                </div>
+
+                                <div class="d-flex flex-column justify-center align-center">
+                                    <div class="d-inline ml-3">
+                                        <h4 class="text-left text-h6  mb-1 secondary--text">Llámanos</h4>
+
+                                        <a class="text-decoration-none " href="tel:+57 012 3456789">
+
+                                            <h5 class="font-weight-medium text-body-1 text-white">
+                                                +57 311 650 0061
+                                            </h5>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </v-col>
+                        <v-col class="v-col-md-4 v-col-12">
+                            <div class="pt-2 mb-0 d-flex align-center">
+                                <div class="base-avatar d-inline-flex mb-3 align-self-start">
+                                    <v-avatar class="grey lighten-2" color="primary" size="72">
+                                        <v-icon color="white " size="36">mdi-email</v-icon>
+                                    </v-avatar>
+                                </div>
+                                <div class="d-flex flex-column justify-center  align-center">
+                                    <div class="d-inline ml-3">
+                                        <h4 class="text-left text-h6  mb-1 secondary--text">Escríbenos</h4>
+                                        <div class="d-flex">
+                                            <a class="text-decoration-none font-weight-medium text-body-1 text-white"
+                                               href="mailto:contacto@irepairsoft.com">
+                                                contacto@irepairsoft.com
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </v-col>
+                    </v-row>
+                </v-container>
+            </div>
+        </div>
     </page-layout>
 </template>
 

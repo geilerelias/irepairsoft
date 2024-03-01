@@ -4,8 +4,6 @@ import bg from '../../../images/bg/Imagen1.jpg'
 import bgLogo from '../../../images/slides/slide-7.jpg'
 import contact from '../../../images/bg/bg-01.jpg'
 
-import LoadingComponent from "@/Components/LoadingComponent.vue";
-
 import service10 from '../../../images/services/service (10).jpg'
 import service11 from '../../../images/services/service (11).jpg'
 import service13 from '../../../images/services/service (13).jpg'
@@ -325,23 +323,21 @@ const dialog = ref(false)
             <v-container>
                 <v-row>
                     <v-col v-for="item in services" cols="12" md="4" sm="6">
-                        <div class="mb-sm-6">
-                            <v-card class="hover-card overflow-hidden lh-10 rounded-md position-relative"><a
-                                class="text-decoration-none" href="#">
-                                <v-img :src="item.img[0]" aria-label="post" aspect-ratio="1/1"
-                                       class="v-responsive  zoom-in w-100" cover>
-                                    <template v-slot:placeholder>
-                                        <v-row
-                                            align="center"
-                                            class="fill-height ma-0"
-                                            justify="center"
-                                        >
-                                            <loading-component/>
-                                        </v-row>
-                                    </template>
-                                </v-img>
-                            </a></v-card>
-                            <div class="mt-4">
+                        <div class="mb-sm-6 ma-sm-1 "
+                             data-aos-delay="200"
+                             data-aos-duration="1000">
+
+                            <div :data-aos="mobile?'fade-up':'flip-up'" class="hover-card"
+                                 data-aos-delay="200"
+                                 data-aos-duration="1000">
+                                <a class="text-decoration-none" href="#">
+                                    <v-img :src="item.img[0]"
+                                           alt="about2" class="zoom-in w-100 h-100" rounded="lg"/>
+                                </a>
+                            </div>
+
+                            <div :data-aos="mobile?'fade-up':'fade-right'" class="mt-4" data-aos-delay="200"
+                                 data-aos-duration="1000">
                                 <h5 class="text-h5 font-weight-bold text-13">
                                     {{ item.title }}
                                 </h5>
