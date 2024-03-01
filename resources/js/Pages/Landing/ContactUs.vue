@@ -312,7 +312,8 @@ const enviar = (mail) => {
                                         <h4 class="text-left text-h6  mb-1 secondary--text">Visítanos</h4>
                                         <h5 class="font-weight-medium text-body-1 text-white ml-2">
                                             local 6 esquina, Cl. 16b #11-123.
-                                            <br>Valledupar, Cesar </h5>
+                                            <br>Valledupar, Cesar
+                                        </h5>
                                     </div>
                                 </div>
                             </div>

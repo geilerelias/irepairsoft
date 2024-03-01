@@ -404,7 +404,8 @@ const pilaresCorporativos = [
                                     </h6>
                                 </div>
                                 <h2 class="text-h4 py-6 text-white">
-                                    Discutamos sobre su proyecto y llevémoslo al siguiente nivel.
+                                    Hablemos sobre la reparación de tu dispositivo y cómo podemos llevarla al siguiente
+                                    nivel en iRepair Laboratorio.
                                 </h2>
                                 <v-row>
                                     <v-col class="v-col-12"><h6
@@ -447,7 +448,7 @@ const pilaresCorporativos = [
                                                 <v-icon color="white">mdi-map-marker</v-icon>
                                             </a>
                                             <h5 class="font-weight-medium text-h5 text-white ml-2">
-                                                Calle 85 B # 71 A-30 Barrio El Limoncito / Barranquilla Atlántico
+                                                local 6 esquina, Cl. 16b #11-123. Valledupar, Cesar
                                             </h5></div>
                                     </v-col>
                                 </v-row>
