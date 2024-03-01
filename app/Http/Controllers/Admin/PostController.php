@@ -1,10 +1,10 @@
 <?php
 namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
-use App\Models\Post;
-use Illuminate\Http\Request;
+use Domain\Blog\Models\Post;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+
 class PostController extends Controller
 {
     public function __construct()

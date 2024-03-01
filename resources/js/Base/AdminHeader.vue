@@ -1,7 +1,6 @@
 <script setup>
 import {computed, ref} from "vue";
-import {useDisplay} from 'vuetify';
-
+import {useDisplay, useTheme} from 'vuetify';
 
 import {useAdminDrawerStore} from '../../stores/adminDrawer';
 import {useAuthLinksStore} from "../../stores/authLinks";
@@ -14,11 +13,46 @@ const authLinksStore = useAuthLinksStore();
 
 const appName = 'iRepairSoft';
 const links = authLinksStore.authLinks
+
+const listNewNotification = [
+    {type: 'subheader', title: 'Today'},
+    {
+        prependAvatar: 'https://cdn.vuetifyjs.com/images/lists/1.jpg',
+        title: 'Brunch this weekend?',
+        subtitle: `<span class="text-primary">Ali Connors</span> &mdash; I'll be in your neighborhood doing errands this weekend. Do you want to hang out?`,
+    },
+    {type: 'divider', inset: true},
+    {
+        prependAvatar: 'https://cdn.vuetifyjs.com/images/lists/2.jpg',
+        title: 'Summer BBQ',
+        subtitle: `<span class="text-primary">to Alex, Scott, Jennifer</span> &mdash; Wish I could come, but I'm out of town this weekend.`,
+    },
+    {type: 'divider', inset: true},
+    {
+        prependAvatar: 'https://cdn.vuetifyjs.com/images/lists/3.jpg',
+        title: 'Oui oui',
+        subtitle: '<span class="text-primary">Sandra Adams</span> &mdash; Do you have Paris recommendations? Have you ever been?',
+    },
+    {type: 'divider', inset: true},
+    {
+        prependAvatar: 'https://cdn.vuetifyjs.com/images/lists/4.jpg',
+        title: 'Birthday gift',
+        subtitle: '<span class="text-primary">Trevor Hansen</span> &mdash; Have any ideas about what we should get Heidi for her birthday?',
+    },
+    {type: 'divider', inset: true},
+    {
+        prependAvatar: 'https://cdn.vuetifyjs.com/images/lists/5.jpg',
+        title: 'Recipe to try',
+        subtitle: '<span class="text-primary">Britta Holt</span> &mdash; We should eat this: Grate, Squash, Corn, and tomatillo Tacos.',
+    },
+];
+
 const toggleDrawer = () => {
     adminDrawerStore.toggleDrawer();
 };
 
 const rail = computed(() => adminDrawerStore.rail)
+const menuNotification = ref(null)
 
 function changeRail() {
     adminDrawerStore.changeDrawerRail();
@@ -53,21 +87,27 @@ function onClick() {
 
 }
 
+const theme = useTheme()
+
+function toggleTheme() {
+    theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
+}
+
 
 </script>
 
 <template>
-    <v-app-bar class="bg-primary">
+    <v-app-bar class="bg-primary position-fixed">
         <template v-slot:prepend>
-            <div :style="layoutStyle" class="d-flex  align-center">
-                <logo size="50"></logo>
+            <div :style="{ width: !mdAndUp || rail ?'': '260px !important' }" class="d-flex  align-center">
+                <logo :size="50"></logo>
                 <p v-if="!rail" class="mr-2 text-h6 font-weight-bold">{{ appName }}</p>
             </div>
 
         </template>
 
-        <v-app-bar-nav-icon @click="toggleDrawer"></v-app-bar-nav-icon>
-        <v-app-bar-nav-icon @click="changeRail"></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon v-if="!mdAndUp" @click="toggleDrawer"></v-app-bar-nav-icon>
+        <v-app-bar-nav-icon v-if="mdAndUp" @click="changeRail"></v-app-bar-nav-icon>
         <v-menu :close-on-content-click="false"
                 location="end"
                 offset-y>
@@ -112,6 +152,47 @@ function onClick() {
             </v-sheet>
         </v-menu>
         <v-spacer></v-spacer>
+
+        <v-btn icon @click="toggleTheme">
+            <v-icon :icon="$vuetify.theme.name === 'dark' ? 'mdi-weather-sunny' : 'mdi-weather-night'"></v-icon>
+        </v-btn>
+
+        <v-menu
+            v-model="menuNotification"
+            :close-on-content-click="false"
+            location="end"
+        >
+            <template v-slot:activator="{ props }">
+                <v-btn class="text-none mr-2" icon v-bind="props">
+                    <v-badge color="error" content="2">
+                        <v-icon>mdi-bell-outline</v-icon>
+                    </v-badge>
+                </v-btn>
+            </template>
+
+            <v-card max-width="450" min-width="300">
+                <v-toolbar>
+                    <v-btn icon="mdi-menu" variant="text"></v-btn>
+
+                    <v-toolbar-title>Notifications</v-toolbar-title>
+
+                    <v-spacer></v-spacer>
+
+                    <v-btn icon="mdi-magnify" variant="text"></v-btn>
+                </v-toolbar>
+
+                <v-list
+                    :items="listNewNotification"
+                    item-props
+                    lines="three"
+                >
+                    <template v-slot:subtitle="{ subtitle }">
+                        <div v-html="subtitle"></div>
+                    </template>
+                </v-list>
+            </v-card>
+        </v-menu>
+
 
         <template v-slot:append>
             <settings-dropdown></settings-dropdown>

@@ -1,9 +1,12 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
-use App\Models\User;
+use Domain\Shared\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+
 class UserController extends Controller
 {
     public function __construct()
@@ -13,10 +16,11 @@ class UserController extends Controller
         $this->middleware('can:user edit', ['only' => ['edit', 'update']]);
         $this->middleware('can:user delete', ['only' => ['destroy']]);
     }
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Inertia\Response
      */
     public function index()
     {
@@ -30,6 +34,19 @@ class UserController extends Controller
                 'edit' => Auth::user()->can('user edit'),
                 'delete' => Auth::user()->can('user delete'),
             ]
+        ]);
+    }
+
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id): \Inertia\Response
+    {
+        $user = User::findOrFail($id);
+
+        return Inertia::render('Admin/User/Show', [
+            'user' => $user
         ]);
     }
 }

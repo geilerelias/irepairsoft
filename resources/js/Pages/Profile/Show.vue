@@ -1,11 +1,11 @@
 <script setup>
-import AppLayout from '@/Layouts/AppLayout.vue';
 import DeleteUserForm from '@/Pages/Profile/Partials/DeleteUserForm.vue';
 import LogoutOtherBrowserSessionsForm from '@/Pages/Profile/Partials/LogoutOtherBrowserSessionsForm.vue';
 import SectionBorder from '@/Components/SectionBorder.vue';
 import TwoFactorAuthenticationForm from '@/Pages/Profile/Partials/TwoFactorAuthenticationForm.vue';
 import UpdatePasswordForm from '@/Pages/Profile/Partials/UpdatePasswordForm.vue';
 import UpdateProfileInformationForm from '@/Pages/Profile/Partials/UpdateProfileInformationForm.vue';
+import AdminLayout from "@/Layouts/AdminLayout.vue";
 
 defineProps({
     confirmsTwoFactorAuthentication: Boolean,
@@ -14,7 +14,7 @@ defineProps({
 </script>
 
 <template>
-    <AppLayout title="Profile">
+    <admin-layout title="Profile">
         <v-app>
             <template #header>
                 <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -55,5 +55,5 @@ defineProps({
                 </div>
             </div>
         </v-app>
-    </AppLayout>
+    </admin-layout>
 </template>

@@ -77,7 +77,7 @@ const redirect = dir => {
             </v-list-item>
 
 
-            <template v-if="$page.props.auth.user==null">
+            <template v-if="$page.props.auth===null">
                 <v-list-subheader>Autenticación</v-list-subheader>
                 <inertia-link v-for="item in authentication"
                               :key="item.title"
@@ -87,7 +87,7 @@ const redirect = dir => {
                 </inertia-link>
             </template>
 
-            <template v-if="$page.props.auth.user!==null">
+            <template v-if="$page.props.auth!==null">
 
                 <v-list-subheader>
                     Autenticado
@@ -102,7 +102,7 @@ const redirect = dir => {
             </template>
 
         </v-list>
-        <template v-if="$page.props.auth.user!==null" v-slot:append>
+        <template v-if="$page.props.auth!==null" v-slot:append>
             <v-list-item @click="logout">
                 <v-list-item prepend-icon="mdi-logout" title="Logout" value="Logout"></v-list-item>
             </v-list-item>

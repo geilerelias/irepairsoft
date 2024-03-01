@@ -7,7 +7,7 @@ const linksStore = useLinksStore();
 </script>
 
 <template>
-    <v-footer  elevation="24">
+    <v-footer elevation="24">
         <v-container>
             <v-row no-gutters>
                 <v-col cols="12" md="4">
@@ -52,9 +52,9 @@ const linksStore = useLinksStore();
                                     ? 'text-primary font-weight-black'
                                     : 'text-secondary'
                             "
-                                variant="text"
                                 class="mx-2"
                                 rounded="xl"
+                                variant="text"
                             >
                                 {{ item.title }}
                             </v-btn>
@@ -65,7 +65,8 @@ const linksStore = useLinksStore();
             <v-divider class="my-4"/>
             <div class="text-center body-2  secondary--text text--lighten-2">
 
-                <span class="font-weight-bold">iRepairSoft</span> 2020 - {{ new Date().getFullYear() }} © Todos los derechos reservados
+                <span class="font-weight-bold">iRepairSoft</span> 2020 - {{ new Date().getFullYear() }} © Todos los
+                derechos reservados
             </div>
         </v-container>
     </v-footer>

@@ -34,6 +34,14 @@ Route::get('/example', function () {
     return Inertia::render('Example');
 })->name('example');
 
+Route::get('/example2', function () {
+    return Inertia::render('Example2');
+})->name('example2');
+
+Route::get('/datatables', function () {
+    return Inertia::render('Datatables');
+})->name('datatables');
+
 Route::get('/welcome', function () {
     return Inertia::render('Welcome', [
         'canLogin' => Route::has('login'),
@@ -43,14 +51,65 @@ Route::get('/welcome', function () {
     ]);
 });
 
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
+])->prefix('dashboard')->group(function () {
+
+    Route::get('/', function () {
+        return Inertia::render('Admin/Dashboard');
     })->name('dashboard');
+
+
+    Route::get('/order', function () {
+        return Inertia::render('Admin/Dashboard');
+    })->name('order');
+
+    Route::get('/customer', function () {
+        return Inertia::render('Admin/Dashboard');
+    })->name('customer');
+
+    Route::get('/device', function () {
+        return Inertia::render('Admin/Dashboard');
+    })->name('device');
+
+    Route::get('/product', function () {
+        return Inertia::render('Admin/Dashboard');
+    })->name('product');
+
+    Route::get('/cash', function () {
+        return Inertia::render('Admin/Dashboard');
+    })->name('cash');
+
+    Route::get('/schedule', function () {
+        return Inertia::render('Admin/Dashboard');
+    })->name('schedule');
+
+    Route::get('/supplier', function () {
+        return Inertia::render('Admin/Dashboard');
+    })->name('supplier');
+
+    Route::get('/reports', function () {
+        return Inertia::render('Admin/Dashboard');
+    })->name('reports');
+
+    //Route::resource('role', App\Http\Controllers\Admin\RoleController::class);
+
+    Route::resource('posts', App\Http\Controllers\Blog\PostController::class);
+
+
+});
+
+Route::group([
+    'prefix' => 'dashboard',
+    'middleware' => ['auth:sanctum', config('jetstream.auth_session'), 'verified'],
+], function () {
+    Route::resource('user', App\Http\Controllers\Admin\UserController::class);
+    Route::resource('role', App\Http\Controllers\Admin\RoleController::class);
+    Route::resource('permission', App\Http\Controllers\Admin\PermissionController::class);
+    //Route::resource('post', App\Http\Controllers\Admin\PostController::class);
 });
 
 
@@ -77,14 +136,4 @@ Route::get('/get/img/{folder?}/{file?}', function ($folder = 'null', $file = nul
     } catch (Exception $e) {
         return 'Excepción capturada: ' . $e->getMessage() . "\n";
     }
-});
-
-Route::group([
-    'prefix' => 'admin',
-    'middleware' => ['auth'],
-], function () {
-    Route::resource('user', App\Http\Controllers\Admin\UserController::class);
-    Route::resource('role', App\Http\Controllers\Admin\RoleController::class);
-    Route::resource('permission', App\Http\Controllers\Admin\PermissionController::class);
-    Route::resource('post', App\Http\Controllers\Admin\PostController::class);
 });

@@ -1,4 +1,6 @@
 <script setup>
+import {computed, ref} from "vue";
+
 const props = defineProps({
     textModel: {
         type: String,
@@ -6,65 +8,80 @@ const props = defineProps({
     },
     pagination: Object,
 })
+const page = ref(1)
+const totalPages = computed(() => {
+    return Math.ceil(links.length / to)
+})
+const toggle = ref(null)
 
 defineEmits(['paginate'])
 
-const { from, to, total, current_page, last_page, links } = props.pagination;
+const {from, to, total, current_page, last_page, links} = props.pagination;
 </script>
 
 <template>
     <div :key="new Date().getTime()">
-        <div>
-            <div>
-                <p>
-                    Mostrando de {{ from }} a {{ to }} de {{ total }} {{ textModel }}
-                </p>
-            </div>
-            <div>
-                <nav aria-label="Pagination">
-                    <a
-                        v-for="link in links"
-                        :key="link.label"
-                        href="#"
-                    >
-                        <span
-                            v-if="link.label === 'first'"
-                            @click.prevent="$emit('paginate', 1)"
-                        >
-                            <span class="sr-only">Primera</span> &lt; &lt;
-                        </span>
+        <div class="d-flex justify-space-between">
+            <p>
+                Mostrando de {{ from }} a {{ to }} de {{ total }} {{ textModel }}
+            </p>
+            <v-spacer></v-spacer>
 
-                        <span
-                            v-if="link.label === 'prev'"
-                            @click="$emit('paginate', current_page - 1)"
-                        >
-                            <span class="sr-only">Anterior</span> &lt;
-                        </span>
 
-                        <a
-                            v-if="!isNaN(link.label)"
-                            @click.prevent="$emit('paginate', link.label)"
-                            :class="[link.active ? 'bg-indigo-600 text-white' : 'bg-white text-gray-500', 'border-gray-300']"
-                        >
-                            {{ link.label }}
-                        </a>
 
-                        <span
-                            v-if="link.label === 'next'"
-                            @click="$emit('paginate', current_page + 1)"
-                        >
-                            <span class="sr-only">Siguiente</span> &gt;
-                        </span>
 
-                        <span
-                            v-if="link.label === 'last'"
-                            @click="$emit('paginate', last_page)"
-                        >
-                            <span class="sr-only">Última</span> &gt; &gt;
-                        </span>
-                    </a>
-                </nav>
-            </div>
+
+            <template
+                v-for="(link, l) in links"
+                :key="link.label"
+            >
+                <v-btn
+                    v-if="link.label === 'first'"
+                    class="mx-1"
+                    icon="mdi-skip-backward-outline"
+                    size="small"
+                    @click.prevent="$emit('paginate', 1)"
+                >
+                </v-btn>
+
+
+                <v-btn
+                    v-if="link.label === 'prev'"
+                    class="mx-1"
+                    icon="mdi-skip-previous-outline"
+                    size="small"
+                    @click="$emit('paginate', current_page - 1)"
+                >
+                </v-btn>
+
+
+                <v-btn v-if="!isNaN(link.label)"
+                       :class="[link.active ? 'text-white' : 'bg-white text-grey', 'border-gray-300']"
+                       :color="link.active?'primary':''"
+                       class="mx-1"
+                       icon
+                       size="small"
+                       @click.prevent="$emit('paginate', link.label)"
+                >
+                    {{ link.label }}
+                </v-btn>
+
+                <v-btn v-if="link.label === 'next'"
+                       class="mx-1"
+                       icon="mdi-skip-next-outline"
+                       size="small"
+                       @click="$emit('paginate', current_page + 1)"
+                >
+                </v-btn>
+
+                <v-btn v-if="link.label === 'last'"
+                       class="mx-1"
+                       icon="mdi-skip-forward-outline"
+                       size="small"
+                       @click="$emit('paginate', last_page)"
+                >
+                </v-btn>
+            </template>
         </div>
     </div>
 </template>

@@ -1,11 +1,11 @@
 <template>
     <v-app>
-        <inertia-head :title="title"/>
+        <Head :title="title"/>
 
         <page-drawer></page-drawer>
         <page-header></page-header>
         <v-main>
-                <slot></slot>
+            <slot></slot>
             <page-footer></page-footer>
         </v-main>
 
@@ -14,10 +14,17 @@
 </template>
 
 <script setup>
+import {onMounted} from "vue";
+import PageDrawer from "../Base/PageDrawer.vue";
+import PageHeader from "../Base/PageHeader.vue";
+import PageFooter from "../Base/PageFooter.vue";
+import {Head} from "@inertiajs/vue3";
+//aos
+import AOS from "aos";
 
-import PageDrawer from "../base/PageDrawer.vue";
-import PageHeader from "../base/PageHeader.vue";
-import PageFooter from "../base/PageFooter.vue";
+onMounted(() => {
+    AOS.init();
+})
 
 defineProps({
     title: String,

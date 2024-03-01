@@ -5,7 +5,6 @@ import AuthenticationCard from '@/Components/AuthenticationCard.vue';
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
 import AuthLayout from "../../Layouts/AuthLayout.vue";
 import SpinnerComponent from "../../Components/SpinnerComponent.vue";
-import TextInput from "../../Components/TextInput.vue";
 
 const show = ref(null)
 
@@ -14,7 +13,7 @@ defineProps({
     status: String,
 });
 
-const form = useForm({
+let form = useForm({
     email: '',
     password: '',
     remember: false,
@@ -54,7 +53,7 @@ const reset = () => {
 <template>
     <auth-layout title="Ingresar">
 
-        <AuthenticationCard  class="pa-2 pa-sm-8">
+        <AuthenticationCard class="pa-2 pa-sm-8">
             <template #logo>
                 <AuthenticationCardLogo/>
                 <h2 class="font-weight-bold mt-4 text-blue-grey-darken-2">Ingresar</h2>
@@ -73,7 +72,7 @@ const reset = () => {
             <form @submit.prevent="submit">
                 <div class="mt-4">
 
-                    <TextInput
+                    <v-text-field
                         v-model="form.email"
                         :error-messages="form.errors.email?form.errors.email:''"
                         :rules="[emailRules.required,emailRules.valid]"
@@ -81,8 +80,9 @@ const reset = () => {
                         label="E-mail"
                         name="email"
                         required
+                        variant="outlined"
                     >
-                    </TextInput>
+                    </v-text-field>
 
                     <!--<InputLabel for="email" value="Email"/>-->
 
@@ -93,7 +93,7 @@ const reset = () => {
                     <!--
                                         <InputLabel for="password" value="Password"/>
                     -->
-                    <TextInput
+                    <v-text-field
                         v-model="form.password"
                         :append-inner-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                         :error-messages="form.errors.password?form.errors.password:''"
@@ -106,9 +106,10 @@ const reset = () => {
                         label="password"
                         name="password"
                         required
+                        variant="outlined"
                         @click:append-inner="show = !show"
                         @keyup.enter="submit"
-                    ></TextInput>
+                    ></v-text-field>
 
                     <!--                    <InputError :message="form.errors.password" class="mt-2"/>-->
                 </div>

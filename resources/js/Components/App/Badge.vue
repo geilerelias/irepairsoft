@@ -5,7 +5,7 @@ defineProps({
 </script>
 
 <template>
-    <span>
+    <v-chip size="small" class="mr-1">
         {{ text }}
-    </span>
+    </v-chip>
 </template>

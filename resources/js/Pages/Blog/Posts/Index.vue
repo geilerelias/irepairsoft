@@ -1,10 +1,12 @@
 <script setup>
-import { onMounted, ref } from "vue";
-import { Inertia } from "@inertiajs/inertia";
-import { Link } from "@inertiajs/inertia-vue3";
-import AppLayout from '@/Layouts/AppLayout.vue';
+import {onMounted, ref} from "vue";
+import {Inertia} from "@inertiajs/inertia";
+import {router} from '@inertiajs/vue3'
+import {Link} from "@inertiajs/inertia-vue3";
 import Pagination from "@/Components/App/Pagination.vue";
 import Post from "@/Components/App/Posts/Post.vue";
+import AdminLayout from "../../../Layouts/AdminLayout.vue";
+import BreadCrumbs from "../../../Components/BreadCrumbs.vue";
 
 const props = defineProps({
     model: {
@@ -22,7 +24,28 @@ const props = defineProps({
 const input = ref(null);
 const filters = ref(props.model.filters);
 
+const links = [
+    {
+        title: 'Dashboard',
+        disabled: true,
+        href: '/dashboard',
+    }, {
+        title: 'Post',
+        disabled: false,
+        href: '/dashboard/posts',
+    }
+]
+
 onMounted(() => input.value.focus());
+
+const updateCategories = () => {
+    filters.value.categories = props.model.filters.categories.map(id => {
+        const category = props.model.categories.data.find(item => item.id === Number(id));
+        return category || null;
+    });
+};
+
+onMounted(updateCategories)
 
 const exportToExcel = () => {
     let queryString = [];
@@ -43,7 +66,7 @@ const exportToExcel = () => {
 
 const paginate = page => {
     filters.value.page = page;
-    Inertia.get(route('posts.index'), filters.value, {
+    router.get(route('posts.index'), filters.value, {
         preserveScroll: true,
     });
 }
@@ -55,103 +78,223 @@ const filterData = () => {
 const resetFilters = () => {
     filters.value = props.model.initial_filters;
     filterData();
+    console.log(window.location.pathname);
+    router.get(window.location.pathname);
 }
 </script>
 
 <template>
-    <AppLayout title="Posts">
-        <template #header>
-            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Posts
-            </h2>
+    <admin-layout title="Posts">
+        <bread-crumbs :items="links" name="Gestion de Post"></bread-crumbs>
+        <v-container>
 
-            <button
-                @click="Inertia.visit(route('posts.create'))"
-            >
-                Crear nuevo post
-            </button>
+            <v-card flat="">
+                <v-card-text class="d-flex align-center justify-sm-space-between justify-start gap-4 flex-wrap">
+                    <v-btn class="bg-primary" variant="elevated"
+                           @click="Inertia.visit(route('posts.create'))"
+                    >
+                        Crear nuevo post
+                    </v-btn>
 
-            <a
-                @click.prevent="exportToExcel"
-            >
-                Exportar a Excel
-            </a>
-        </template>
+                    <v-btn color="primary"
+                           flat=""
+                           variant="outlined"
+                           @click.prevent="exportToExcel"
+                    >
+                        Exportar a Excel
+                    </v-btn>
+                </v-card-text>
 
-        <div class="py-8">
-            <div >
-                <div>
-                    <div class="col-span-1">
-                        <input
-                            ref="input"
-                            placeholder="Búsqueda por título"
-                            v-model="filters.query"
-                            @input="filterData"
-                            type="text"
-                        />
-                    </div>
-                    <div class="col-span-1">
-                        <select
-                            v-if="model.categories"
-                            multiple
-                            v-model="filters.categories"
-                            @change="filterData"
-                        >
-                            <option v-for="category in model.categories.data" :value="category.id">
-                                {{ category.name }}
-                            </option>
-                        </select>
-                    </div>
-                    <div class="col-span-1">
-                        <select
-                            v-if="model.tags"
-                            multiple
-                            v-model="filters.tags"
-                            @change="filterData"
-                        >
-                            <option v-for="tag in model.tags.data" :value="tag.id">
-                                {{ tag.name }}
-                            </option>
-                        </select>
-                    </div>
+                <v-card-text class=" d-flex align-center justify-sm-space-between justify-start gap-4 flex-wrap">
+                    <v-row>
 
-                    <div class="col-span-1 mx-auto my-auto">
-                        <button
-                            @click="resetFilters"
-                            type="button"
-                        >
-                            Restablecer filtros
-                        </button>
-                    </div>
-                </div>
+                        <v-col cols="12" lg="3" md="6">
+                            <v-text-field
+                                ref="input"
+                                v-model="filters.query"
+                                clearable
+                                density="compact"
+                                hide-details
+                                placeholder="Búsqueda por título"
+                                prepend-inner-icon="mdi-magnify"
+                                type="text"
+                                variant="outlined"
+                                @input="filterData"
+                            ></v-text-field>
+                        </v-col>
 
-                <div>
-                    <div v-if="model.posts.data.length">
-                        <Post
-                            v-for="post in model.posts.data"
-                            :key="post.id"
-                            :post="post"
-                        />
-                    </div>
-                    <div class="text-center py-4" v-else>
-                        <h3>No hay posts</h3>
-                        <p>Crea el primer post.</p>
-                        <div class="mt-6">
-                            <Link
-                                :href="route('posts.create')"
+                        <v-col cols="12" lg="3" md="6" sm="6">
+                            <v-autocomplete
+                                v-if="model.categories"
+                                v-model="filters.categories"
+                                :chips="true"
+                                :items="model.categories.data"
+                                :multiple="true"
+                                closable-chips
+                                density="compact"
+                                hide-details
+                                item-title="name"
+                                item-value="id"
+                                label="Categorías"
+                                variant="outlined"
+                                @update:modelValue="filterData"
                             >
-                                Nuevo Post
-                            </Link>
-                        </div>
-                    </div>
-                </div>
+                                <template v-slot:chip="{ props, item }">
+                                    <v-chip
+                                        :text="item.raw.name"
+                                        :value="item.raw.id"
+                                        v-bind="props"
+                                    ></v-chip>
+                                </template>
 
-                <Pagination
-                    v-if="model.posts.data.length"
-                    :pagination="model.posts.meta"
-                    @paginate="paginate"
-                />
+                                <template v-slot:item="{ props, item }">
+                                    <v-list-item
+                                        :title="item?.raw?.name"
+                                        :value="item?.raw?.id"
+                                        v-bind="props"
+                                    >
+                                    </v-list-item>
+                                </template>
+                            </v-autocomplete>
+                        </v-col>
+
+                        <v-col cols="12" lg="3" md="6" sm="6">
+                            <v-autocomplete
+                                v-if="model.tags"
+                                v-model="filters.tags"
+                                :chips="true"
+                                :items="model.tags.data"
+                                :multiple="true"
+                                closable-chips
+                                density="compact"
+                                hide-details
+                                item-title="name"
+                                item-value="id"
+                                label="Etiquetas"
+                                variant="outlined"
+                                @chip-input="filterData"
+                            >
+                                <template v-slot:chip="{ props, item }">
+                                    <v-chip
+                                        :text="item.raw.name"
+                                        :value="item.raw.id"
+                                        v-bind="props"
+                                    ></v-chip>
+                                </template>
+
+                                <template v-slot:item="{ props, item }">
+                                    <v-list-item
+                                        :title="item?.raw?.name"
+                                        :value="item?.raw?.id"
+                                        v-bind="props"
+                                        @click="filterData"
+                                    >
+                                    </v-list-item>
+                                </template>
+                            </v-autocomplete>
+                        </v-col>
+
+                        <v-col class="d-flex justify-center" cols="12" lg="3" md="6">
+                            <v-btn color="primary"
+                                   rounded="xl"
+                                   size="large"
+                                   @click="resetFilters"
+                            >
+                                Restablecer filtros
+                            </v-btn>
+                        </v-col>
+                    </v-row>
+                </v-card-text>
+            </v-card>
+
+        </v-container>
+
+        <v-container>
+            <div class="py-8">
+                <div>
+
+                    <!--                    <div>
+                                            <div class="col-span-1">
+                                                <input
+                                                    ref="input"
+                                                    v-model="filters.query"
+                                                    placeholder="Búsqueda por título"
+                                                    type="text"
+                                                    @input="filterData"
+                                                />
+                                            </div>
+                                            <div class="col-span-1">
+                                                <select
+                                                    v-if="model.categories"
+                                                    v-model="filters.categories"
+                                                    multiple
+                                                    @change="filterData"
+                                                >
+                                                    <option v-for="category in model.categories.data" :value="category.id">
+                                                        {{ category.name }}
+                                                    </option>
+
+                                                </select>
+
+                                            </div>
+                                            <div class="col-span-1">
+                                                <select
+                                                    v-if="model.tags"
+                                                    v-model="filters.tags"
+                                                    multiple
+                                                    @change="filterData"
+                                                >
+                                                    <option v-for="tag in model.tags.data" :value="tag.id">
+                                                        {{ tag.name }}
+                                                    </option>
+                                                </select>
+                                            </div>
+
+                                            <div class="col-span-1 mx-auto my-auto">
+                                                <button
+                                                    type="button"
+                                                    @click="resetFilters"
+                                                >
+                                                    Restablecer filtros
+                                                </button>
+                                            </div>
+                                        </div>-->
+
+                    <div>
+                        <v-row v-if="model.posts.data.length" >
+                            <v-col
+                                v-for="post in model.posts.data"
+                                :key="post.id"
+                                class="d-flex child-flex"
+                                cols="6"
+                            >
+                                <Post
+                                    :post="post"
+                                />
+                            </v-col>
+                        </v-row>
+                        <v-row v-else class="text-center py-4">
+                            <v-col>
+                                <h3>No hay posts</h3>
+                                <p>Crea el primer post.</p>
+                                <div class="mt-6">
+                                    <Link
+                                        :href="route('posts.create')"
+                                    >
+                                        Nuevo Post
+                                    </Link>
+                                </div>
+                            </v-col>
+                        </v-row>
+                    </div>
+
+                    <Pagination
+                        v-if="model.posts.data.length"
+                        :pagination="model.posts.meta"
+                        @paginate="paginate"
+                    />
+                </div>
             </div>
-        </div>
-    </AppLayout>
+        </v-container>
+    </admin-layout>
 </template>

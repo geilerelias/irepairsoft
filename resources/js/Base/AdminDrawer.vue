@@ -2,13 +2,13 @@
 import {computed, ref} from 'vue';
 import logo from '../../images/bg-logo-drawer.jpg'
 //import logo from '../../images/logo.jpg'
-
-
 import {useAdminDrawerStore} from '../../stores/adminDrawer';
 import {useDisplay} from 'vuetify';
 import {useAuthLinksStore} from "../../stores/authLinks";
 
-const breakpoint = useDisplay();
+import {router} from '@inertiajs/vue3'
+
+const {mdAndUp} = useDisplay()
 
 const adminDrawerStore = useAdminDrawerStore();
 
@@ -31,6 +31,10 @@ const listNotAuthenticated = [
 const authLinksStore = useAuthLinksStore();
 const links = authLinksStore.authLinks
 
+function navigateTo(route) {
+    router.get(route);
+}
+
 function logout() {
     axios.post(route('logout')).then(response => {
         window.location = '/';
@@ -40,24 +44,40 @@ function logout() {
 </script>
 
 <template>
+
     <v-navigation-drawer
         v-model="drawer"
+        :absolute="true"
+        :permanent="mdAndUp"
         :rail="rail"
+        :rail-width="75"
+        class="position-fixed"
         expand-on-hover
-        style="box-shadow: rgb(0 0 0 / 20%) -20px 1px 17px 8px, rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px"
+        fixed
+        style="box-shadow: rgb(0 0 0 / 20%) -20px 1px 17px 8px, rgb(0 0 0 / 14%) 0px 2px 2px 0px, rgb(0 0 0 / 12%) 0px 1px 5px 0px;"
+
     >
-        <v-img class='mt-n1' :src="logo" min-width="260">
-            <div class="py-7 px-1">
-                <v-avatar size="45">
-                    <v-img :alt="$page.props.auth.user.name" :src="$page.props.auth.user.profile_photo_url"
-                           contain
-                    >
-                    </v-img>
-                </v-avatar>
-            </div>
+        <perfect-scrollbar>
+            <v-img min-width="250px" :src="logo" class='mt-n1'>
+                <div class="fill-height d-flex flex-column justify-space-between">
+                    <div class="py-7 px-1">
+                        <v-avatar v-if="$page.props.auth !==null" size="45">
+                            <v-img :alt="$page.props.auth.user.name" :src="$page.props.auth.user.profile_photo_url"
+                                   contain
+                            >
+                            </v-img>
+                        </v-avatar>
+                    </div>
+
+
+                </div>
+            </v-img>
+
             <div class="d-flex align-center px-3"
                  style="background: rgba(0,0,0,.5);">
-                <h5 :class="{'text-truncate': rail }" class="text-white font-weight-medium ">
+                <h5 v-if="$page.props.auth !==null" :class="{'text-truncate': rail }"
+                    class="text-white font-weight-medium  text-truncate"
+                    style="overflow: hidden;text-overflow: ellipsis;white-space: nowrap;">
                     {{ $page.props.auth.user.name }}
                 </h5>
                 <div class="ml-auto">
@@ -72,53 +92,48 @@ function logout() {
                     </v-btn>
                 </div>
             </div>
-        </v-img>
-        <v-divider></v-divider>
-        <v-list dense shaped>
-            <v-list-item-group
-                v-model="group"
-                color="primary"
-            >
-                <template v-if="$page.props.user===null">
 
+            <v-divider></v-divider>
+
+            <v-list>
+                <template v-if="$page.props.auth.user===null">
                     <v-divider></v-divider>
-                    <v-subheader>Authentication</v-subheader>
+                    <v-list-subheader>Authentication</v-list-subheader>
                     <inertia-link v-for="item in listNotAuthenticated"
                                   :key="item.title"
                                   :href="item.route">
                         <v-list-item>
-                            <v-list-item-icon>
-                                <v-icon>{{ item.icon }}</v-icon>
-                            </v-list-item-icon>
-
-                            <v-list-item-content>
-                                <v-list-item-title>{{ item.title }}</v-list-item-title>
-                            </v-list-item-content>
+                            <template v-slot:prepend>
+                                <v-icon :icon="item.icon"></v-icon>
+                            </template>
+                            <v-list-item-title v-text="item.title"></v-list-item-title>
                         </v-list-item>
                     </inertia-link>
                 </template>
 
                 <v-list-subheader>Admin</v-list-subheader>
+
                 <v-list-item
-                    v-for="(item, i) in links"
-                    :key="i"
+                    v-for="(item, i) in links" :key="i"
+                    :active="route().current(item.route)"
+                    :class="route().current(item.route)?'active bg-primary':''"
+                    :dark="route().current(item.route)"
                     :prepend-icon="item.icon"
                     :title="item.title"
-                    :value="item"
-                    color="primary"
+                    class="text-decoration-none mr-1"
+                    rounded="e-xl"
+                    @click="navigateTo(route(item.route))"
                 >
-                </v-list-item>
 
-            </v-list-item-group>
-        </v-list>
+                </v-list-item>
+            </v-list>
+        </perfect-scrollbar>
     </v-navigation-drawer>
 </template>
 
 <style scoped>
-.background-image {
-    width: 100%;
-    height: 300px; /* Establece el alto deseado */
-    background-size: cover;
-    background-position: center;
+.ps {
+    height: calc(100vh - 64px);
 }
+
 </style>

@@ -1,7 +1,7 @@
 <template>
     <!-- Settings Dropdown -->
 
-    <div v-if="$page.props.auth.user!==null" class="text-center hidden-xs-only">
+    <div v-if="$page.props.auth!==null" class="text-center hidden-xs-only">
         <v-menu
             :close-on-content-click="false"
             location="end"
@@ -10,9 +10,9 @@
             <template v-slot:activator="{ props }">
                 <v-btn v-if="$page.props.jetstream.managesProfilePhotos"
                        dark
-                       icon
-                       size="large"
+                       icon size="large"
                        v-bind="props"
+                       variant="tonal"
                 >
                     <v-avatar size="50">
                         <v-img :alt="$page.props.auth.user.name" :src="$page.props.auth.user.profile_photo_url"
@@ -29,13 +29,13 @@
                     <div class="d-flex align-center mt-4 pb-6">
                         <v-avatar color="primary" size="80">
                             <v-avatar size="76">
-                                <v-img :alt="$page.props.auth.user.name" :src="$page.props.auth.user.profile_photo_url"
+                                <v-img :alt="$page.props.auth.user.name"
+                                       :src="$page.props.auth.user.profile_photo_url"
                                        contain
                                 >
                                 </v-img>
                             </v-avatar>
                         </v-avatar>
-
                         <div class="ml-3">
                             <h6 class="text-h6 mb-n1">{{ $page.props.auth.user.name }}</h6>
                             <div class="d-flex align-center mt-1">
@@ -51,51 +51,56 @@
                 <v-divider></v-divider>
 
                 <!-- Responsive Settings Options -->
-                <v-list v-if="$page.props.auth.user!==null" dense rounded>
+                <v-list v-if="$page.props.auth!==null" dense rounded>
                     <v-list-subheader>Administración</v-list-subheader>
-                    <inertia-link :href="route('dashboard')">
-                        <v-list-item
-                            :class="route().current('dashboard')?'active primary  white--text':''"
-                            :dark="route().current('dashboard')">
-                            <template v-slot:prepend>
-                                <v-icon>mdi-view-dashboard-outline</v-icon>
-                            </template>
-                            <template v-slot:subtitle="{ subtitle }">
-                                <v-list-item-title> Dashboard</v-list-item-title>
-                            </template>
-                        </v-list-item>
-                    </inertia-link>
+
+                    <v-list-item
+                        :active="route().current('dashboard')"
+                        :class="route().current('dashboard')?'active bg-primary':''"
+                        :dark="route().current('dashboard')"
+                        class="text-decoration-none mr-1"
+                        prepend-icon="mdi-view-dashboard-outline"
+                        rounded="lg"
+                        title="Dashboard"
+                        @click="navigateTo(route('dashboard'))"
+                    >
+                    </v-list-item>
                 </v-list>
 
-                <v-list v-if="$page.props.auth.user!==null" dense rounded>
+                <v-list v-if="$page.props.auth!==null" dense rounded>
                     <v-list-subheader>Settings Options</v-list-subheader>
 
-                    <inertia-link :href="route('profile.show')">
-                        <v-list-item
-                            :class="route().current('profile.show')?'active primary  white--text':''"
-                            :dark="route().current('profile.show')">
-                            <template v-slot:prepend>
-                                <v-icon>mdi-account-circle</v-icon>
-                            </template>
-                            <template v-slot:subtitle="{ subtitle }">
-                                <v-list-item-title> Profile</v-list-item-title>
-                            </template>
-                        </v-list-item>
-                    </inertia-link>
-                    <inertia-link v-if="$page.props.jetstream.hasApiFeatures"
-                                  :href="route('api-tokens.index')">
-                        <v-list-item
-                            :class="route().current('api-tokens.index')?'active primary  white--text':''"
-                            :dark="route().current('api-tokens.index')"
-                        >
-                            <template v-slot:prepend>
-                                <v-icon>mdi-lan</v-icon>
-                            </template>
-                            <template v-slot:subtitle="{ subtitle }">
-                                <v-list-item-title> API Tokens</v-list-item-title>
-                            </template>
-                        </v-list-item>
-                    </inertia-link>
+
+                    <v-list-item
+                        :active="route().current('profile.show')"
+                        :class="route().current('profile.show')?'active bg-primary':''"
+                        :dark="route().current('profile.show')"
+                        class="text-decoration-none mr-1"
+                        rounded="lg"
+                        @click="navigateTo(route('profile.show'))">
+                        <template v-slot:prepend>
+                            <v-icon>mdi-account-circle</v-icon>
+                        </template>
+                        <template v-slot:subtitle="{ subtitle }">
+                            <v-list-item-title> Profile</v-list-item-title>
+                        </template>
+                    </v-list-item>
+                    <v-list-item
+                        v-if="$page.props.jetstream.hasApiFeatures" :active="route().current('api-tokens.index')"
+                        :class="route().current('api-tokens.index')?'active bg-primary':''"
+                        :dark="route().current('api-tokens.index')"
+                        class="text-decoration-none mr-1"
+                        rounded="lg"
+                        @click="navigateTo(route('api-tokens.index'))"
+                    >
+                        <template v-slot:prepend>
+                            <v-icon>mdi-lan</v-icon>
+                        </template>
+                        <template v-slot:subtitle="{ subtitle }">
+                            <v-list-item-title> API Tokens</v-list-item-title>
+                        </template>
+                    </v-list-item>
+
 
                 </v-list>
 
@@ -115,7 +120,7 @@
     </div>
 
     <!--Usuario no autenticado-->
-    <div v-if="$page.props.auth.user==null" class="text-center">
+    <div v-if="$page.props.auth==null" class="text-center">
         <v-menu
             :close-on-content-click="false"
             :nudge-width="200"
@@ -134,7 +139,7 @@
 
             <v-card>
                 <v-list>
-                    <template v-if="$page.props.auth.user==null">
+                    <template v-if="$page.props.auth===null">
                         <v-list-subheader>Autenticación</v-list-subheader>
                         <v-divider></v-divider>
                         <v-list-item
@@ -171,6 +176,11 @@ const items = [
     {title: 'Login', icon: 'mdi-account-lock', route: '/login'},
     {title: 'Sign Up', icon: 'mdi-account-plus', route: '/register'}
 ]
+
+function navigateTo(route) {
+    router.get(route);
+}
+
 const logout = () => {
     router.post(route('logout'));
 };

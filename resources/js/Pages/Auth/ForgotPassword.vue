@@ -30,9 +30,9 @@ const submit = () => {
                 <AuthenticationCardLogo/>
             </template>
 
-            <div class="mb-4 text-sm text-gray-600">
-                Forgot your password? No problem. Just let us know your email address and we will email you a password
-                reset link that will allow you to choose a new one.
+            <div class="mb-4 text-sm text-gray-600 text-justify">
+                ¿Olvidaste tu contraseña? No hay problema. Simplemente háganos saber su dirección de correo electrónico
+                y le enviaremos un enlace de restablecimiento de contraseña que le permitirá elegir una nueva.
             </div>
 
             <div v-if="status" class="mb-4 font-medium text-sm text-green-600">

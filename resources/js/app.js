@@ -15,6 +15,14 @@ import 'sweetalert2/dist/sweetalert2.min.css';
 // Vuetify
 import Vuetify from '../plugins/vuetify'
 
+//PerfectScrollbar
+import PerfectScrollbar from 'vue3-perfect-scrollbar'
+import 'vue3-perfect-scrollbar/dist/vue3-perfect-scrollbar.css'
+
+
+//VueGates
+import VueGates from 'vue-gates';
+import Permissions from './../plugins/Permissions';
 
 
 const appName = window.document.getElementsByTagName('title')[0]?.innerText || 'Laravel';
@@ -30,6 +38,9 @@ createInertiaApp({
             .use(createPinia())
             .use(Vuetify)
             .use(VueSweetalert2)
+            .use(PerfectScrollbar)
+            .use(VueGates)
+            .use(Permissions)
             .component('InertiaHead', Head)
             .component('InertiaLink', Link)
             .mount(el);

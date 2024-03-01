@@ -1,5 +1,5 @@
 <script setup>
-import { Link } from "@inertiajs/inertia-vue3";
+import {Link} from "@inertiajs/inertia-vue3";
 import Badge from "@/Components/App/Badge.vue";
 
 defineProps({
@@ -8,23 +8,24 @@ defineProps({
 </script>
 
 <template>
-    <div>
-        <div class="mt-8">
-            <h2 class="text-xl font-medium text-indigo-500 underline">
-                <Link :href="route('posts.edit', post)" class="focus:outline-none">
+    <v-card class="pa-2 ma-2" style="width: 100%;">
+        <v-card-title>
+            <h2 class="text-xl font-medium text-indigo-darken-2 underline text-truncate">
+                <Link :href="route('posts.edit', post)" class="focus:outline-none ">
                     {{ post.title }}
                 </Link>
             </h2>
-            <br />
+        </v-card-title>
+        <v-card-text>
             <small>({{ post.created_at }})</small>
             <h3 class="text-lg font-medium">
                 {{ post.user.name }}
             </h3>
-            <p class="mt-2 text-sm text-gray-500">
+            <p class="mt-2 text-sm text-grey-darken-3">
                 Categorías:
-                <Badge :text="post.category.name" />
+                <Badge :text="post.category.name"/>
             </p>
-            <p class="mt-2 text-sm text-gray-500">
+            <p class="mt-2 text-sm text-grey-darken-3">
                 Etiquetas:
                 <Badge
                     v-for="tag in post.tags"
@@ -32,6 +33,6 @@ defineProps({
                     :text="tag.name"
                 />
             </p>
-        </div>
-    </div>
+        </v-card-text>
+    </v-card>
 </template>

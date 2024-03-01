@@ -35,8 +35,8 @@ const submit = () => {
                 <AuthenticationCardLogo/>
             </template>
 
-            <div class="mb-4 text-sm text-gray-600">
-                This is a secure area of the application. Please confirm your password before continuing.
+            <div class="mb-4 text-sm text-gray-600 text-justify">
+                Esta es un área segura de la aplicación. Por favor, confirme su contraseña antes de continuar.
             </div>
 
             <form @submit.prevent="submit">

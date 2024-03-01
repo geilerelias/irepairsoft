@@ -11,7 +11,7 @@ let links = linkStore.links;
 <template>
     <v-divider class="bg-grey pa-1"></v-divider>
     <v-footer
-        app="true"
+        :app="true"
         name="app-footer"
     >
 
@@ -22,7 +22,8 @@ let links = linkStore.links;
 
                 <span
                     class="d-md-flex  text-primary d-none">
-                    <inertia-link v-for="link in links" :key="link.id" :href="link.to" class="px-2"
+                    <inertia-link v-for="link in links" :key="link.id" :href="link.route"
+                                  class="text-decoration-none text-primary px-2"
                                   target="noopener noreferrer">
                         {{ link.title }}
                     </inertia-link>

@@ -4,10 +4,12 @@ import AuthenticationCard from '@/Components/AuthenticationCard.vue';
 import AuthenticationCardLogo from '@/Components/AuthenticationCardLogo.vue';
 import InputError from '@/Components/InputError.vue';
 import InputLabel from '@/Components/InputLabel.vue';
-import TextInput from '@/Components/TextInput.vue';
 import AuthLayout from "../../Layouts/AuthLayout.vue";
-import {computed, ref} from "vue";
+import {ref} from "vue";
 import PrimaryButton from "../../Components/PrimaryButton.vue";
+
+const show = ref(false)
+const show2 = ref(null)
 
 const form = useForm({
     name: '',
@@ -19,29 +21,29 @@ const form = useForm({
 
 
 const nameRules = [
-    v => !!v || 'Name is required',
+    v => !!v || 'El nombre es requerido',
 ];
 const emailRules = [
-    v => !!v || 'E-mail is required',
-    v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+    v => !!v || 'El E-mail es requerido',
+    v => /.+@.+\..+/.test(v) || 'El email debe ser válido',
 ];
 
 const passwordRules = [
-    value => !!value || 'Required.',
-    v => v.length >= 8 || 'Min 8 characters',
+    value => !!value || 'La contraseña es requerida.',
+    v => v.length >= 8 || 'Mínimo 8 caracteres',
 ];
 
+const confirmPasswordRules = [
+    (v) => !!v || 'La confirmación de contraseña es requerida',
+    (v) => v === form.password || 'Las contraseñas no coinciden',
+];
 
 const submit = () => {
     form.post(route('register'), {
         onFinish: () => form.reset('password', 'password_confirmation'),
     });
 };
-const show = ref(false)
-const show2 = ref(null)
-const confirmPasswordRules = computed(() => {
-    return null
-})
+
 
 function reset() {
 
@@ -55,14 +57,14 @@ function reset() {
             <template #logo>
                 <AuthenticationCardLogo/>
                 <h2 class="font-weight-bold mt-4 blue-grey--text text--darken-2">Registrarse</h2>
-                <h6 class="subtitle-1 mb-4"> ¿Ya tienes cuenta?
+                <h6 class=" mb-4"> ¿Ya tienes cuenta?
                     <inertia-link href="/login">Inicia sesión</inertia-link>
                 </h6>
             </template>
 
             <form @submit.prevent="submit">
                 <div>
-                    <TextInput
+                    <v-text-field
                         id="name"
                         v-model="form.name"
                         :error-messages="form.errors.name"
@@ -73,10 +75,11 @@ function reset() {
                         label="Nombres"
                         required
                         type="text"
+                        variant="outlined"
                     />
                 </div>
                 <div class="mt-4">
-                    <TextInput
+                    <v-text-field
                         id="email"
                         v-model="form.email"
                         :error-messages="form.errors.email"
@@ -86,12 +89,13 @@ function reset() {
                         label="Email"
                         required
                         type="email"
+                        variant="outlined"
                         @blur="form.clearErrors('email')"
                     />
                 </div>
 
                 <div class="mt-4">
-                    <TextInput
+                    <v-text-field
                         id="password"
                         v-model="form.password"
                         :append-inner-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
@@ -103,12 +107,13 @@ function reset() {
                         label="Contraseña"
                         required
                         type="password"
+                        variant="outlined"
                         @click:append-inner="show = !show"
                     />
                 </div>
 
                 <div class="mt-4">
-                    <TextInput
+                    <v-text-field
                         id="password_confirmation"
                         v-model="form.password_confirmation"
                         :append-inner-icon="show2 ? 'mdi-eye' : 'mdi-eye-off'"
@@ -120,6 +125,7 @@ function reset() {
                         label="Confirmar Contraseña"
                         required
                         type="password"
+                        variant="outlined"
                         @click:append-inner="show2 = !show2"
 
                     />
@@ -137,10 +143,10 @@ function reset() {
                                 required
                             >
                                 <template v-slot:label>
-                                    <div class="ml-2">
+                                    <div class="ml-2 text-wrap">
                                         Estoy de acuerdo con los
                                         <a :href="route('terms.show')"
-                                           class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                                           class="underline text-sm  rounded-md focus:outline-none"
                                            target="_blank">
                                             Términos de servicio
                                         </a>

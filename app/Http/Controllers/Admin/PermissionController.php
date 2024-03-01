@@ -1,9 +1,12 @@
 <?php
+
 namespace App\Http\Controllers\Admin;
+
 use App\Http\Controllers\Controller;
-use App\Models\Permission;
+use Domain\Shared\Models\Permission;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+
 class PermissionController extends Controller
 {
     public function __construct()
@@ -13,6 +16,7 @@ class PermissionController extends Controller
         $this->middleware('can:permission edit', ['only' => ['edit', 'update']]);
         $this->middleware('can:permission delete', ['only' => ['destroy']]);
     }
+
     /**
      * Display a listing of the resource.
      *

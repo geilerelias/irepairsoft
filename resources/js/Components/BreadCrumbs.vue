@@ -1,52 +1,44 @@
 <template>
-    <v-row class="row mx-0">
-        <v-col class="px-0 mx-0 col-sm-12 col-12">
-            <v-card class="px-2  mx-0 rounded-0">
-                <v-toolbar class="transparent px-0 mx-0" dense extended
-                           flat>
-                    <v-toolbar-title class="text--primary">{{ name }}</v-toolbar-title>
-                    <template
-                        v-slot:extension>
-                        <v-breadcrumbs :items="items"
-                                       class="px-0 mx-0"
-                        >
-                            <template v-slot:item="{ item }">
-                                <inertia-link v-if="!item.disabled" :href="item.href">
-                                    <v-breadcrumbs-item
-                                        :disabled="item.disabled"
-                                    >
-                                        {{ item.text }}
-                                    </v-breadcrumbs-item>
-                                </inertia-link>
-                                <v-breadcrumbs-item v-else
-                                                    :disabled="item.disabled"
+    <v-sheet class="rounded-b-lg pa-4 ml-2 mt-0" elevation="2" width="100vw">
+        <div class="d-flex justify-space-between">
+            <div class="d-flex py-0 align-center">
+                <div>
+                    <h3 class="text-h6 mb-2">{{name}}</h3>
+
+                    <v-breadcrumbs :items="items" class="font-weight-regular pa-0 ml-n1">
+                        <template v-slot:item="{ item }">
+                            <inertia-link v-if="!item.disabled" :href="item.href">
+                                <v-breadcrumbs-item
+                                    :disabled="item.disabled"
                                 >
                                     {{ item.text }}
                                 </v-breadcrumbs-item>
-                            </template>
-                        </v-breadcrumbs>
-                    </template>
-                </v-toolbar>
-            </v-card>
-        </v-col>
-    </v-row>
+                            </inertia-link>
+                            <v-breadcrumbs-item v-else
+                                                :disabled="item.disabled"
+                            >
+                                {{ item.text }}
+                            </v-breadcrumbs-item>
+                        </template>
+                    </v-breadcrumbs>
+                </div>
+            </div>
+        </div>
+    </v-sheet>
 </template>
 
-<script>
-export default {
-    props: {
-        name: {
-            type: String,
-            required: true
-        },
-        items: {
-            type: Array,
-            required: true
-        }
+<script setup>
+
+defineProps({
+    name: {
+        type: String,
+        required: true
+    },
+    items: {
+        type: Array,
+        required: true
     }
-    ,
-    name: "BreadCrumbs"
-}
+})
 </script>
 
 <style>

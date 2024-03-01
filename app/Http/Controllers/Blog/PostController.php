@@ -17,23 +17,27 @@ class PostController extends Controller
 {
     public function index(): Response
     {
+        //dd((new GetPostViewModel())->toArray());
         return inertia('Blog/Posts/Index', [
             "model" => new GetPostViewModel(),
         ]);
     }
 
-    public function create(): Response {
+    public function create(): Response
+    {
         return inertia('Blog/Posts/Form', [
             "model" => new UpsertPostViewModel
         ]);
     }
 
-    public function store(PostRequest $request): RedirectResponse {
+    public function store(PostRequest $request): RedirectResponse
+    {
         UpsertPostAction::execute($request->user());
         return redirect()->route('posts.index');
     }
 
-    public function edit(Post $post): Response {
+    public function edit(Post $post): Response
+    {
         return inertia('Blog/Posts/Form', [
             "title" => __("Editar post"),
             "actionText" => __("Actualizar"),
@@ -41,7 +45,8 @@ class PostController extends Controller
         ]);
     }
 
-    public function update(PostRequest $request): RedirectResponse {
+    public function update(PostRequest $request): RedirectResponse
+    {
         UpsertPostAction::execute($request->user());
         return redirect()->route('posts.index');
     }

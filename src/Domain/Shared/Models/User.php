@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Models;
+namespace Domain\Shared\Models;
 
+use Database\Factories\UserFactory;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -9,7 +10,6 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
-
 use Spatie\Permission\Traits\HasRoles;
 
 
@@ -24,7 +24,7 @@ class User extends Authenticatable implements MustVerifyEmail
     use HasRoles;
 
 
-    protected $guard_name = 'sanctum';
+    protected string $guard_name = 'sanctum';
 
     /**
      * The attributes that are mass assignable.
@@ -66,4 +66,9 @@ class User extends Authenticatable implements MustVerifyEmail
     protected $appends = [
         'profile_photo_url',
     ];
+
+    protected static function newFactory()
+    {
+        return app(UserFactory::class);
+    }
 }
